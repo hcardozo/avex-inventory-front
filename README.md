@@ -1,0 +1,1 @@
+# avex-inventory-front
