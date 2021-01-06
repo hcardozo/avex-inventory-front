@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -12,13 +13,17 @@ export class InicioSesionComponent implements OnInit {
     nombre: new FormControl('', [Validators.required]),
     clave: new FormControl('', [Validators.required]),
   });;
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
   public iniciarSesion() {
-    console.log(this.inicioSesionGroup.controls)
+    console.log(this.inicioSesionGroup.controls);
+    this.router.navigate(['privada/inicio'])
+
   }
 
 }

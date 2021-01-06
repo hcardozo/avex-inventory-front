@@ -6,14 +6,14 @@ const routes: Routes = [
   {
    path: '',
    pathMatch: 'full',
-   redirectTo: 'inicio-sesion' 
+   redirectTo: 'publica' 
   },
   {
     path: '404',
     component: NotFoundComponent
   },
   {
-    path: 'inicio-sesion',
+    path: 'publica',
     loadChildren: () => import('./publica/publica.module').then(m => m.PublicaModule)
   },
   {
