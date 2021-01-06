@@ -1,0 +1,41 @@
+<section>
+  <div class="contenedor-login col-lg-4 col-md-6 col-sm-8 col-10">
+    <div class="cabecera">
+      INICIO DE SESIÓN
+    </div>
+    <div class="cuerpo">
+      <img
+        class="imagen-inicio-sesion"
+        src="https://images.vectorhq.com/images/previews/949/war-s-symbol-darksiders-ps3-360-psd-455340.png"
+      />
+
+      <form [formGroup]="inicioSesionGroup">
+        <label for="usuario">Usuario</label>
+        <input
+          type="text"
+          autocomplete="off"
+          formControlName="nombre"
+          class="form-control"
+          id="usuario"
+        />
+        <label for="clave">Contraseña</label>
+        <input
+          type="password"
+          autocomplete="off"
+          formControlName="clave"
+          class="form-control"
+          id="clave"
+        />
+      </form>
+
+      <a class="restablecer-contraseña" href="">Restablecer Contraseña</a>
+      <button
+        class="btn btn-primary boton-inicio-sesion"
+        [disabled]="!inicioSesionGroup.valid"
+        (click)="iniciarSesion()"
+      >
+        Ingresar
+      </button>
+    </div>
+  </div>
+</section>

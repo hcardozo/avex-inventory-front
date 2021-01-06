@@ -1,0 +1,55 @@
+@mixin borde-contenedor {
+    border: 1px solid rgba(172,172,172,1);
+}
+
+.contenedor-login {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 0;
+
+}
+
+.cabecera {
+    @include borde-contenedor();
+    background-color: rgba(172,172,172,0.7);
+    text-align: center;
+    padding: 2px;
+}
+
+.cuerpo {
+    @include borde-contenedor();
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 20%;
+
+    .imagen-inicio-sesion {
+        width: 40%;
+        height: auto;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    label {
+        width: 100%;
+    }
+    input {
+        width: 100%;
+    }
+}
+
+.restablecer-contraseña {
+    margin: 15px 0px;
+}
+
+.boton-inicio-sesion {
+    margin: 15px 0px;
+    width: 80%;
+
+}
