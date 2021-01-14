@@ -28,3 +28,26 @@ h1.titulo {
 button:focus {
   outline: none;
 }
+
+.mat-side-menu {
+  width: 15%;
+}
+
+.padre {
+  font-size: 1.1rem;
+}
+
+.sub-item-menu {
+  border-radius: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: unset;
+  border-top: 1px solid rgba(0,0,0,.125);
+}
+
+.sub-item-menu:hover {
+  background-color: rgba(0,0,0,.09);
+}

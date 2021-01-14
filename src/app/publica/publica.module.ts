@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PublicaRoutingModule } from './publica-routing.module';
 import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UsuarioModule } from 'avex-api';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PublicaRoutingModule
+    PublicaRoutingModule,
+    UsuarioModule
   ]
 })
 export class PublicaModule { }

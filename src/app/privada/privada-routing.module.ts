@@ -4,9 +4,16 @@ import { MaestroComponent } from './components/maestro/maestro.component';
 
 const routes: Routes = [
   {
-    path: 'inicio',
-    component: MaestroComponent
+    path: '',
+    component: MaestroComponent,
+    children:[
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./modules/usuario/usuario.module').then(m => m.UsuarioModule)
+      }
+    ]
   }
+  
 ];
 
 @NgModule({

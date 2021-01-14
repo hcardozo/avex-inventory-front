@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './compartido/components/not-found/not-found.component';
+import { SesionGuard } from './privada/guards/sesion/sesion.guard';
 
 const routes: Routes = [
   {
-   path: '',
-   pathMatch: 'full',
-   redirectTo: 'publica' 
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'publica'
   },
   {
     path: '404',
@@ -18,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'privada',
-    loadChildren: ()=> import ('./privada/privada.module').then(m => m.PrivadaModule)
+    loadChildren: () => import('./privada/privada.module').then(m => m.PrivadaModule),
+    canLoad: [SesionGuard]
   },
   {
     path: '**',
