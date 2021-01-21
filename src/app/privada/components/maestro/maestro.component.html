@@ -4,22 +4,30 @@
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="titulo">Avex Inventory</h1>
+
+    
+    <button mat-icon-button class="log-out" (click)="logout()">
+      <i class="fa fa-sign-out"></i>
+    </button>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+    <mat-sidenav #snav  opened="true" [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56" class="mat-side-menu">
       <mat-nav-list *ngIf="menu">
         <div  *ngFor="let seccion of menu; let i = index;">
-          <a mat-list-item routerLink="."
+          <a mat-list-item 
             [ngClass]="[ seccion.itemMenu ? 'padre' : '']" (click)="estadoItemMenu[i] = !estadoItemMenu[i]">
             {{seccion.nombreSeccion}}
           </a>
           <div id="collapseBasic" *ngIf="seccion.itemMenu" [collapse]="!estadoItemMenu[i]" [isAnimated]="true">
-            <div class="sub-item-menu card card-block card-header" *ngFor="let opcion of seccion.itemMenu" (click)="redireccionar(opcion.routeLink, seccion.anidados)">
-              <span> {{opcion.labelMenu}}  </span>
-              <i class="fa {{opcion.icono}}"></i>
-            </div>
+            <ng-container *ngFor="let opcion of seccion.itemMenu" >
+              <div *ngIf="opcion.nivelMenu == 1" class="sub-item-menu card card-block card-header" (click)="redireccionar(opcion.routeLink, seccion.anidados)">
+                <span> {{opcion.labelMenu}}  </span>
+                <i class="fa {{opcion.icono}}"></i>
+              </div>
+
+            </ng-container>
           </div>
         </div>
         <hr>
@@ -27,7 +35,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <!-- <p *ngFor="let content of fillerContent">{{content}}</p> -->
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

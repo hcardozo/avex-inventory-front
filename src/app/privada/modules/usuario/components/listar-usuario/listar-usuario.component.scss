@@ -1,0 +1,73 @@
+::ng-deep .p-datatable-tbody tr td {
+    overflow: hidden;
+}
+
+::ng-deep .p-datatable-tbody tr td:hover {
+    overflow: auto;
+}
+
+:host ::ng-deep {
+    .p-datatable-responsive-demo .p-datatable-tbody > tr > td .p-column-title {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 40rem) {
+    :host ::ng-deep {
+        .p-datatable {
+            &.p-datatable-responsive-demo {
+                .p-datatable-thead > tr > th,
+                .p-datatable-tfoot > tr > td {
+                    display: none !important;
+                }
+
+                .p-datatable-tbody > tr > td {
+                    text-align: left;
+                    display: block;
+                    width: 100%;
+                    float: left;
+                    clear: left;
+                    border: 0 none;
+
+                    .p-column-title {
+                        padding: 0.4rem;
+                        min-width: 30%;
+                        display: inline-block;
+                        margin: -0.4em 1em -0.4em -0.4rem;
+                        font-weight: bold;
+                    }
+
+                    &:last-child {
+                        border-bottom: 1px solid var(--surface-d);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cabecera-tabla {
+    display: flex;
+    justify-content: space-between;
+
+    .titulo {
+        font: unset;
+        margin: unset;
+        margin-bottom: 0.5rem !important;
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+    }
+
+    .p-input-icon-left input {
+        padding-left: 2rem;
+    }
+}
+
+.acciones {
+    display: flex;
+    justify-content: space-evenly;
+
+    i {
+        font-size: 20px;
+    }
+}

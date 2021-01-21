@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MetodosComunesService } from './services/metodosComunes/metodos-comunes.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AlertaService } from './services/alerta/alerta.service';
 
 
 
@@ -8,6 +11,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   declarations: [NotFoundComponent],
   imports: [
     CommonModule
+  ],
+  providers: [
+    MetodosComunesService,
+    AlertaService,
+    NgxSpinnerModule,
+    DatePipe
   ]
 })
 export class CompartidoModule { }

@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'privada',
     loadChildren: () => import('./privada/privada.module').then(m => m.PrivadaModule),
-    canLoad: [SesionGuard]
+    canActivateChild: [SesionGuard]
   },
   {
     path: '**',

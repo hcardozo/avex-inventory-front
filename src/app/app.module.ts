@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CompartidoModule } from './compartido/compartido.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { MatNativeDateModule } from '@angular/material/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfiguracionApexApiModule } from 'avex-api';
 import { IConfiguracionUrl } from 'avex-api/lib/interfaces/configuracion-url.interface';
+import { AutenticacionInterceptor } from './privada/inteceptors/autenticacion.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 const configuracionUrl: IConfiguracionUrl = {
   dominio: '26.11.114.212',
@@ -25,11 +27,20 @@ const configuracionUrl: IConfiguracionUrl = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CompartidoModule,
+    ToastModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    NgxSpinnerModule,
     ConfiguracionApexApiModule.forRoot(configuracionUrl)
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AutenticacionInterceptor,
+      multi: true
+    },
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

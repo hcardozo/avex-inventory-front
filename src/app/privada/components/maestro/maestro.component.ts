@@ -11,18 +11,13 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
   styleUrls: ['./maestro.component.scss']
 })
 export class MaestroComponent implements OnDestroy {
-  mobileQuery: MediaQueryList;
-
-  fillerContent = Array.from({ length: 5 }, () =>
-    `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`);
 
   private mobileQueryListener: () => void;
+
+  public mobileQuery: MediaQueryList;
   public menu: any;
   public estadoItemMenu: boolean[] = [];
+  
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
@@ -45,18 +40,14 @@ export class MaestroComponent implements OnDestroy {
     let objeto: any = {
       guid: sesionUsuario ? sesionUsuario.usuarioAvexInfo.guid : ''
     }
-    let httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${sesionUsuario.tokenInfo.token}`
-    });
-
-    this.menuService.consultarMenu({ parametro: objeto }, httpHeaders).subscribe((data: any) => {
+    
+    this.menuService.consultarMenu({ parametro: objeto }).subscribe((data: any) => {
       if (data && data.resultadoList) {
         data.resultadoList.forEach(element => {
           let opcionesAnidadas: any = element.itemMenu.filter((item) => item.nivelMenu === 2);
           element.anidados = opcionesAnidadas;
         });
         this.menu = data ? data.resultadoList : [];
-        console.log(this.menu)
       }
     });
   }
@@ -72,7 +63,11 @@ export class MaestroComponent implements OnDestroy {
       },
       relativeTo: this.activatedRoute.parent
     }
-    this.router.navigate(['./usuarios'], parametro);
-    debugger;
+    this.router.navigate([`.${ruta}`], parametro);
+  }
+
+  public logout(): void {
+    localStorage.clear();
+    this.router.navigate([`./`]);
   }
 }

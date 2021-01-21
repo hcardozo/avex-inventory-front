@@ -33,6 +33,23 @@ button:focus {
   width: 15%;
 }
 
+@media screen and (max-width: 1150px) {
+  .mat-side-menu {
+    min-width: 20%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .mat-side-menu {
+    min-width: 25%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mat-side-menu {
+    min-width: 35%;
+  }
+}
 .padre {
   font-size: 1.1rem;
 }
@@ -45,9 +62,15 @@ button:focus {
   align-items: center;
   cursor: pointer;
   border: unset;
-  border-top: 1px solid rgba(0,0,0,.125);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .sub-item-menu:hover {
-  background-color: rgba(0,0,0,.09);
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+
+.log-out {
+  margin-left: auto;
+  font-size: 20px;
 }

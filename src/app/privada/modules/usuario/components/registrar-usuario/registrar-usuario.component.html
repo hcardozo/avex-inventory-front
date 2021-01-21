@@ -1,0 +1,158 @@
+<div class="contenedor">
+    <h2>
+        <i class="fa fa-align-justify"></i>
+        {{ this.parametrosRuta?.modificacion ? ' Modificar' : 'Agregar ' }} Usuario
+    </h2>
+    <form [formGroup]="formularioUsuario">
+        <div class="item-formulario">
+            <label for="usuario">Usuario</label>
+            <input type="text" placeholder="Nombre de Usuario" autocomplete="off" formControlName="usuario"
+                class="form-control" id="usuario" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.usuario.dirty && formulario.usuario.errors && formulario.usuario.errors.required">
+            Campo de usuario es requerido
+        </span>
+
+        <div class="item-formulario" *ngIf="!this.parametrosRuta?.modificacion">
+            <label for="clave">Contraseña</label>
+            <input type="text" placeholder="Contraseña" autocomplete="off" formControlName="clave" class="form-control"
+                id="clave" />
+            <button class="btn btn-light" (click)="crearContrasena()"> Generar</button>
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.clave.dirty && formulario.clave.errors && formulario.clave.errors.required">
+            Campo de clave es requerido
+        </span>
+
+        <div class="item-formulario" *ngIf="!this.parametrosRuta?.modificacion">
+            <label for="confirmacionClave">Confirmacion Contraseña</label>
+            <input type="text" placeholder="Volver a Escribir Contraseña" autocomplete="off"
+                formControlName="confirmacionClave" class="form-control" id="confirmacionClave" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.confirmacionClave.dirty && formulario.confirmacionClave.errors && formulario.confirmacionClave.errors.required">
+            Campo de confirmacion de clave es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="nombreCompleto">Nombre Completo</label>
+            <input type="text" placeholder="Nombre Completo" autocomplete="off" formControlName="nombreCompleto"
+                class="form-control" id="nombreCompleto" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.nombreCompleto.dirty && formulario.nombreCompleto.errors && formulario.nombreCompleto.errors.required">
+            Campo de Nombre Completo es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="tipoDeDocumento">Tipo de Documento</label>
+            <!-- <input type="text" placeholder="Tipo de Documento" autocomplete="off" formControlName="tipoDeDocumento"
+                class="form-control" id="tipoDeDocumento" /> -->
+            <select type="number" placeholder="Tipo de Documento" autocomplete="off" formControlName="tipoDeDocumento"
+                class="form-control" id="tipoDeDocumento">
+                <option value="1">Cedula de ciudadania</option>
+                <option value="2">Cedula de ciudadania2</option>
+                <option value="3">Cedula de ciudadania3</option>
+            </select>
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.tipoDeDocumento.dirty && formulario.tipoDeDocumento.errors && formulario.tipoDeDocumento.errors.required">
+            Campo de tipo de documento es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="numeroIdentificacion">Numero de Identificacion</label>
+            <input type="text" placeholder="Numero de Identificacion" autocomplete="off"
+                formControlName="numeroIdentificacion" class="form-control" id="numeroIdentificacion" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.numeroIdentificacion.dirty && formulario.numeroIdentificacion.errors && formulario.numeroIdentificacion.errors.required">
+            Campo de identificacion es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="correoCorporativo">Correo corporativo</label>
+            <input type="text" placeholder="Correo Electronico Corporativo" autocomplete="off"
+                formControlName="correoCorporativo" class="form-control" id="correoCorporativo" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.correoCorporativo.dirty && formulario.correoCorporativo.errors && formulario.correoCorporativo.errors.required">
+            Campo de correo corporativo es requerido
+        </span>
+        <span class="text-danger"
+            *ngIf="formulario.correoCorporativo.dirty && formulario.correoCorporativo.errors && formulario.correoCorporativo.errors.pattern">
+            Campo de correo corporativo es invalido
+        </span>
+
+        <div class="item-formulario" *ngIf="!this.parametrosRuta?.modificacion">
+            <label for="confirmacionCorreoCorporativo">Confirmacion Correo Corporativo</label>
+            <input type="text" placeholder="Volver a Escribir Correo Electronico Corporativo" autocomplete="off"
+                formControlName="confirmacionCorreoCorporativo" class="form-control"
+                id="confirmacionCorreoCorporativo" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.confirmacionCorreoCorporativo.dirty && formulario.confirmacionCorreoCorporativo.errors && formulario.confirmacionCorreoCorporativo.errors.required">
+            Campo de confirmacion de correo corporativo es requerido
+        </span>
+        <span class="text-danger"
+            *ngIf="formulario.confirmacionCorreoCorporativo.dirty && formulario.confirmacionCorreoCorporativo.errors && formulario.confirmacionCorreoCorporativo.errors.pattern">
+            Campo de confirmacion de correo corporativo es invalido
+        </span>
+
+        <div class="item-formulario">
+            <label for="telefono">Telefono</label>
+            <input type="text" placeholder="Telefono" autocomplete="off" formControlName="telefono" class="form-control"
+                id="telefono" />
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.telefono.dirty && formulario.telefono.errors && formulario.telefono.errors.required">
+            Campo de telefono es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label class="label-personalizado" for="perfil">Perfil</label>
+            <!-- <input type="text" placeholder="Perfil" autocomplete="off" formControlName="perfil" class="form-control"
+                id="perfil" /> -->
+            <mat-button-toggle-group formControlName="perfil" id="perfil">
+                <mat-button-toggle value="1">Administrador</mat-button-toggle>
+                <mat-button-toggle value="2">Usuario</mat-button-toggle>
+                <mat-button-toggle value="3">Defecto</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+        <span class="text-danger"
+            *ngIf="formulario.perfil.dirty && formulario.perfil.errors && formulario.perfil.errors.required">
+            Campo de perfil es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label class="label-personalizado" for="habilitar">Habilitar</label>
+            <!-- <input type="text" placeholder="Habilitar" autocomplete="off" formControlName="habilitar"
+                class="form-control" id="habilitar" /> -->
+            <mat-slide-toggle formControlName="habilitar" color="primary" id="habilitar">
+
+            </mat-slide-toggle>
+        </div>
+
+        <div class="contenedor-botones">
+            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="agregarUsuario(formulario)" [disabled]="!formularioUsuario.valid">
+                Agregar
+            </button>
+
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="modificarUsuario(formulario)" [disabled]="!formularioUsuario.valid">
+                Modificar
+            </button>
+        </div>
+    </form>
+
+
+</div>
