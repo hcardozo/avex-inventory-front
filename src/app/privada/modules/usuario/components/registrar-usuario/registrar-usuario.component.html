@@ -3,11 +3,11 @@
         <i class="fa fa-align-justify"></i>
         {{ this.parametrosRuta?.modificacion ? ' Modificar' : 'Agregar ' }} Usuario
     </h2>
-    <form [formGroup]="formularioUsuario">
+    <form [formGroup]="!this.parametrosRuta?.modificacion ? formularioUsuario : formularioModificacionUsuario">
         <div class="item-formulario">
             <label for="usuario">Usuario</label>
             <input type="text" placeholder="Nombre de Usuario" autocomplete="off" formControlName="usuario"
-                class="form-control" id="usuario" />
+                class="form-control" id="usuario" [readonly]="!this.parametrosRuta?.modificacion ? false : true"/>
         </div>
         <span class="text-danger"
             *ngIf="formulario.usuario.dirty && formulario.usuario.errors && formulario.usuario.errors.required">
@@ -148,7 +148,7 @@
                 Agregar
             </button>
 
-            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="modificarUsuario(formulario)" [disabled]="!formularioUsuario.valid">
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="modificarUsuario(formularioModificacion)" [disabled]="!formularioModificacionUsuario.valid">
                 Modificar
             </button>
         </div>

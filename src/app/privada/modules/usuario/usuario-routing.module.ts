@@ -9,12 +9,16 @@ const routes: Routes = [
     redirectTo: 'registrarUsuario'
   },
   {
+    path:'listarUsuarios',
+    component: ListarUsuarioComponent
+  },
+  {
     path:'registrarUsuario',
     component: RegistrarUsuarioComponent
   },
   {
-    path:'listarUsuarios',
-    component: ListarUsuarioComponent
+    path:'modificarUsuario',
+    component: RegistrarUsuarioComponent
   }
 ];
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IEliminarUsuario, UsuarioService } from 'avex-api';
 import { ICambiarEstadoUsuario } from 'avex-api';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
 import { MetodosComunesService } from 'src/app/compartido/services/metodosComunes/metodos-comunes.service';
@@ -14,22 +15,34 @@ import { USER_SESION_KEY } from 'src/environments/constantes';
 })
 export class ListarUsuarioComponent implements OnInit {
 
+    
+  public listaUsuarios: any[] = [];
+  public segundoNivel: any ;
+  public datosSesion: any;
+  
   constructor(private usuarioService: UsuarioService,
     private metodosComunes: MetodosComunesService,
     private alertService: AlertaService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
-  public listaUsuarios: any[] = [];
-  public checked: boolean = true;
-
-  public datosSesion: any;
+    private activatedRoute: ActivatedRoute,
+    private spinner: NgxSpinnerService) { 
+      
+    this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
+    }
 
   ngOnInit(): void {
+    
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
+    this.spinner.show();
     this.usuarioService.listarUsuarios().subscribe((resultado: any) => {
+      this.spinner.hide();
       if (resultado?.resultadoList) {
         this.listaUsuarios = resultado.resultadoList;
       }
+    }, (error: any) => {
+      this.spinner.hide();
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+      throw (error);
     })
   }
 
@@ -50,9 +63,10 @@ export class ListarUsuarioComponent implements OnInit {
       state: {
         usuario
       },
-      relativeTo: this.activatedRoute.parent
+      relativeTo: this.activatedRoute.parent,
+      skipLocationChange: true
     }
-    this.router.navigate([`./registrarUsuario`], navigationExtas);
+    this.router.navigate([`./modificarUsuario`], navigationExtas);
   }
 
   public eliminarUsuario(usuario: any): void {

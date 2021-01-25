@@ -15,22 +15,37 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+            <th pSortableColumn="nombre">
+                Nombre
+                <p-sortIcon field="nombre"></p-sortIcon>
+                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="email">Correo <p-sortIcon field="email"></p-sortIcon>
+            <th pSortableColumn="email">
+                Correo
+                <p-sortIcon field="email"></p-sortIcon>
+                <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="usuario">Usuario <p-sortIcon field="usuario"></p-sortIcon>
+            <th pSortableColumn="usuario">
+                Usuario 
+                <p-sortIcon field="usuario"></p-sortIcon>
+                <p-columnFilter type="text" field="usuario" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="perfil">Perfil <p-sortIcon field="perfil"></p-sortIcon>
+            <th pSortableColumn="perfil">
+                Perfil 
+                <p-sortIcon field="perfil"></p-sortIcon>
+                <p-columnFilter type="text" field="perfil" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon>
+            <th pSortableColumn="estado">
+                Estado 
+                <p-sortIcon field="estado"></p-sortIcon>
+                <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
             </th>
             <th>Acciones </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-usuario>
         <tr>
-            <td><span class="p-column-title">Nombre</span>{{usuario.nombre}}</td>
+            <td #row (blur)="row.scrollLeft = 0"><span class="p-column-title">Nombre</span>{{usuario.nombre}}</td>
             <td><span class="p-column-title">Correo</span>{{usuario.email}}</td>
             <td><span class="p-column-title">Usuario</span>{{usuario.usuario}}</td>
             <td><span class="p-column-title">Perfil</span>{{usuario.perfil}}</td>

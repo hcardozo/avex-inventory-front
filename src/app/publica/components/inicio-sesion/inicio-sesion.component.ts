@@ -51,6 +51,7 @@ export class InicioSesionComponent implements OnInit {
 
       }
     }, (error: any) => {
+      this.spinner.hide();
       this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al iniciar sesion', 'Se presentan problemas al realizar el inicio de sesion, por favor intente nuevamente.');
       throw (error);
     })
