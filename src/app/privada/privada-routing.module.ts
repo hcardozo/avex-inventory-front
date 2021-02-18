@@ -19,6 +19,30 @@ const routes: Routes = [
       {
         path: 'usuarios',
         loadChildren: () => import('./modules/usuario/usuario.module').then(m => m.UsuarioGuiModule)
+      },
+      {
+        path: 'campanas',
+        loadChildren: () => import('./modules/campana/campana.module').then(m => m.CampanaGuiModule)
+      },
+      {
+        path: 'categorias',
+        loadChildren: () => import('./modules/categoria/categoria.module').then(m => m.CategoriaGuiModule)
+      },
+      {
+        path: 'marcas',
+        loadChildren: () => import('./modules/marca/marca.module').then(m => m.MarcaGuiModule)
+      },
+      {
+        path: 'perfiles',
+        loadChildren: () => import('./modules/perfil/perfil.module').then(m => m.PerfilGuiModule)
+      },
+      {
+        path: 'equipoes',
+        loadChildren: () => import('./modules/equipo/equipo.module').then(m => m.EquipoGuiModule)
+      },
+      {
+        path: 'reportes',
+        loadChildren: () => import('./modules/reporte/reporte.module').then(m => m.ReporteGuiModule)
       }
     ]
   }

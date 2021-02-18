@@ -6,7 +6,7 @@ import { RegistrarUsuarioComponent } from './components/registrar-usuario/regist
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'registrarUsuario'
+    redirectTo: 'listarUsuarios'
   },
   {
     path:'listarUsuarios',

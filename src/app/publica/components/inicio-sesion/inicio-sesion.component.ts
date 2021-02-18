@@ -46,7 +46,6 @@ export class InicioSesionComponent implements OnInit {
         localStorage.setItem(USER_SESION_KEY, JSON.stringify(value.resultado));
         this.router.navigate(['privada']);
       } else {
-        debugger;
         this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', value.mensaje);
 
       }

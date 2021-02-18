@@ -1,0 +1,50 @@
+<p-table #dt [value]="listarCampanas" [rows]="5" [paginator]="true"
+    [globalFilterFields]="['nombreMunicipio','nombreDepartamento','estado']" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando {first} a {last}" [showCurrentPageReport]="true"
+    styleClass="p-datatable-responsive-demo">
+    <ng-template pTemplate="caption">
+        <div class="cabecera-tabla">
+            <h5 class="titulo">Campañas</h5>
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="nombreMunicipio">
+                Ciudad
+                <p-sortIcon field="nombreMunicipio"></p-sortIcon>
+                <p-columnFilter type="text" field="nombreMunicipio" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="nombreDepartamento">
+                Departamento
+                <p-sortIcon field="nombreDepartamento"></p-sortIcon>
+                <p-columnFilter type="text" field="nombreDepartamento" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="estado">
+                Estado 
+                <p-sortIcon field="estado"></p-sortIcon>
+                <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
+            </th>
+            <th>Acciones </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-campana>
+        <tr>
+            <td><span class="p-column-title">Ciudad</span>{{campana.NombreMunicipio}}</td>
+            <td><span class="p-column-title">Departamento</span>{{campana.NombreDepartamento}}</td>
+            <td><span class="p-column-title">Estado</span>
+                <p-inputSwitch (onChange)="cambiarEstado($event, campana)" [(ngModel)]="campana.estado"></p-inputSwitch>
+            </td>
+            <td class="acciones">
+                <span class="p-column-title">Acciones</span>
+                <button class="btn btn-warning" (click)="modificarCampana(campana)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger" (click)="eliminarCampana(campana)"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,0 +1,44 @@
+<p-table #dt [value]="listarCategorias" [rows]="5" [paginator]="true"
+    [globalFilterFields]="['nombre','estado']" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando {first} a {last}" [showCurrentPageReport]="true"
+    styleClass="p-datatable-responsive-demo">
+    <ng-template pTemplate="caption">
+        <div class="cabecera-tabla">
+            <h5 class="titulo">Categorias</h5>
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="nombre">
+                Categoria
+                <p-sortIcon field="nombre"></p-sortIcon>
+                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="estado">
+                Estado 
+                <p-sortIcon field="estado"></p-sortIcon>
+                <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
+            </th>
+            <th>Acciones </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-categoria>
+        <tr>
+            <td><span class="p-column-title">Categoria</span>{{categoria.nombre}}</td>
+            <td><span class="p-column-title">Estado</span>
+                <p-inputSwitch (onChange)="cambiarEstado($event, categoria)" [(ngModel)]="categoria.estado"></p-inputSwitch>
+            </td>
+            <td class="acciones">
+                <span class="p-column-title">Acciones</span>
+                <button class="btn btn-warning" (click)="modificarCategoria(categoria)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger" (click)="eliminarCategoria(categoria)"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
