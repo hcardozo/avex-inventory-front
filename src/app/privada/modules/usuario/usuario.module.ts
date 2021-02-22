@@ -14,6 +14,7 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
 import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [RegistrarUsuarioComponent, ListarUsuarioComponent],
@@ -28,7 +29,8 @@ import { ButtonModule } from 'primeng/button';
     InputSwitchModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaginatorModule
   ],
   providers: [
     {

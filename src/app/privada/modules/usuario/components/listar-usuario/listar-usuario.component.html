@@ -1,7 +1,5 @@
-<p-table #dt [value]="listaUsuarios" [rows]="registros" [paginator]="true"
-    [globalFilterFields]="['nombre','email','usuario','perfil', 'estado']" [rowHover]="true" dataKey="id"
-    currentPageReportTemplate="Mostrando {first} a {last}" [showCurrentPageReport]="true"
-    styleClass="p-datatable-responsive-demo">
+<p-table #dt [value]="listaUsuarios" [globalFilterFields]="['nombre','email','usuario','perfil', 'estado']"
+    [rowHover]="true" dataKey="id" styleClass="p-datatable-responsive-demo">
     <ng-template pTemplate="caption">
         <div class="cabecera-tabla">
             <h5 class="titulo">Usuarios</h5>
@@ -64,3 +62,5 @@
         </tr>
     </ng-template>
 </p-table>
+<p-paginator #paginador [rows]="registros" [totalRecords]="totalRegistros" [pageLinkSize]="3"
+    (onPageChange)="cambiarPagina($event)" [first]="0"></p-paginator>

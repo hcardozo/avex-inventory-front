@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IEliminarUsuario, UsuarioService } from 'avex-api';
 import { ICambiarEstadoUsuario } from 'avex-api';
@@ -15,41 +15,31 @@ import { USER_SESION_KEY } from 'src/environments/constantes';
 })
 export class ListarUsuarioComponent implements OnInit {
 
-    
+  
+@ViewChild('paginador') paginador: any;
+
   public listaUsuarios: any[] = [];
-  public segundoNivel: any ;
+  public segundoNivel: any;
   public datosSesion: any;
   public pagina: number = 1;
   public registros: number = 5;
   public registrosHabilitados: number[] = [5, 10, 20, 50]
+  public totalPaginas: number;
   public totalRegistros: number;
-  
+
   constructor(private usuarioService: UsuarioService,
     private metodosComunes: MetodosComunesService,
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService) { 
-      
+    private spinner: NgxSpinnerService) {
+
     this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
-    }
+  }
 
   ngOnInit(): void {
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
-    this.spinner.show();
-    this.usuarioService.infoPaginacion({parametro: { registros: this.registros}}).subscribe((response:any)=> {
-      debugger;
-      this.usuarioService.listarUsuarios({parametro: { pagina: this.pagina, registros: this.registros}}).subscribe((resultado: any) => {
-        this.spinner.hide();
-        if (resultado?.resultadoList) {
-          this.listaUsuarios = resultado.resultadoList;
-        }
-      }, (error: any) => {
-        this.spinner.hide();
-        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
-        throw (error);
-      })
-    })
+    this.refrescarTabla();
   }
 
   public cambiarEstado(event: any, usuario: any) {
@@ -95,25 +85,36 @@ export class ListarUsuarioComponent implements OnInit {
       throw (error);
     })
   }
-  
+
   public cambioCantidadRegistros(): void {
+    this.pagina = 1;
+    this.paginador.changePage(0);
     this.refrescarTabla();
   }
 
   public refrescarTabla(): void {
-    this.usuarioService.infoPaginacion({parametro: { registros: this.registros}}).subscribe((response:any)=> {
-      debugger;
-      this.usuarioService.listarUsuarios({parametro: { pagina: this.pagina, registros: this.registros}}).subscribe((resultado: any) => {
-        this.spinner.hide();
-        if (resultado?.resultadoList) {
-          this.listaUsuarios = resultado.resultadoList;
-        }
-      }, (error: any) => {
-        this.spinner.hide();
-        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
-        throw (error);
-      })
+    this.spinner.show();
+    this.usuarioService.infoPaginacion({ parametro: { registros: this.registros } }).subscribe((response: any) => {
+      if (response.resultado != null) {
+        this.totalPaginas = response.resultado.totalPaginas;
+        this.totalRegistros = response.resultado.totalRegistros;
+        this.usuarioService.listarUsuarios({ parametro: { pagina: this.pagina, registros: this.registros } }).subscribe((resultado: any) => {
+          this.spinner.hide();
+          if (resultado?.resultadoList) {
+            this.listaUsuarios = resultado.resultadoList;
+          }
+        }, (error: any) => {
+          this.spinner.hide();
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+          throw (error);
+        })
+      }
     })
+  }
+
+  public cambiarPagina(evento: any): void {
+    this.pagina = evento.page + 1;
+    this.refrescarTabla();
   }
 
 }

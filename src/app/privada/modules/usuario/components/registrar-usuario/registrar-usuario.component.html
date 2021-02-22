@@ -1,9 +1,9 @@
-<div class="contenedor">
+<div class="contenedor" *ngIf="formularioActual">
     <h2>
         <i class="fa fa-align-justify"></i>
         {{ this.parametrosRuta?.modificacion ? ' Modificar' : 'Agregar ' }} Usuario
     </h2>
-    <form [formGroup]="!this.parametrosRuta?.modificacion ? formularioUsuario : formularioModificacionUsuario">
+    <form [formGroup]="formularioActual" >
         <div class="item-formulario">
             <label for="usuario">Usuario</label>
             <input type="text" placeholder="Nombre de Usuario" autocomplete="off" formControlName="usuario"
@@ -22,7 +22,7 @@
         </div>
 
         <span class="text-danger"
-            *ngIf="formulario.clave.dirty && formulario.clave.errors && formulario.clave.errors.required">
+            *ngIf="formulario?.clave?.dirty && formulario?.clave?.errors && formulario?.clave?.errors.required">
             Campo de clave es requerido
         </span>
 
@@ -33,7 +33,7 @@
         </div>
 
         <span class="text-danger"
-            *ngIf="formulario.confirmacionClave.dirty && formulario.confirmacionClave.errors && formulario.confirmacionClave.errors.required">
+            *ngIf="formulario?.confirmacionClave?.dirty && formulario?.confirmacionClave?.errors && formulario?.confirmacionClave?.errors.required">
             Campo de confirmacion de clave es requerido
         </span>
 
@@ -99,11 +99,11 @@
         </div>
 
         <span class="text-danger"
-            *ngIf="formulario.confirmacionCorreoCorporativo.dirty && formulario.confirmacionCorreoCorporativo.errors && formulario.confirmacionCorreoCorporativo.errors.required">
+            *ngIf="formulario?.confirmacionCorreoCorporativo?.dirty && formulario?.confirmacionCorreoCorporativo?.errors && formulario?.confirmacionCorreoCorporativo?.errors.required">
             Campo de confirmacion de correo corporativo es requerido
         </span>
         <span class="text-danger"
-            *ngIf="formulario.confirmacionCorreoCorporativo.dirty && formulario.confirmacionCorreoCorporativo.errors && formulario.confirmacionCorreoCorporativo.errors.pattern">
+            *ngIf="formulario?.confirmacionCorreoCorporativo?.dirty && formulario?.confirmacionCorreoCorporativo?.errors && formulario?.confirmacionCorreoCorporativo?.errors.pattern">
             Campo de confirmacion de correo corporativo es invalido
         </span>
 
@@ -144,11 +144,11 @@
         </div>
 
         <div class="contenedor-botones">
-            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="agregarUsuario(formulario)" [disabled]="!formularioUsuario.valid">
+            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="agregarUsuario(formulario)" [disabled]="!formularioActual.valid">
                 Agregar
             </button>
 
-            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="modificarUsuario(formularioModificacion)" [disabled]="!formularioModificacionUsuario.valid">
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary" (click)="modificarUsuario(formulario)" [disabled]="!formularioActual.valid">
                 Modificar
             </button>
         </div>
