@@ -1,10 +1,14 @@
-<p-table #dt [value]="listaUsuarios" [rows]="5" [paginator]="true"
+<p-table #dt [value]="listaUsuarios" [rows]="registros" [paginator]="true"
     [globalFilterFields]="['nombre','email','usuario','perfil', 'estado']" [rowHover]="true" dataKey="id"
     currentPageReportTemplate="Mostrando {first} a {last}" [showCurrentPageReport]="true"
     styleClass="p-datatable-responsive-demo">
     <ng-template pTemplate="caption">
         <div class="cabecera-tabla">
             <h5 class="titulo">Usuarios</h5>
+
+            <select [(ngModel)]="registros" (change)="cambioCantidadRegistros()">
+                <option [value]="item" *ngFor="let item of registrosHabilitados">{{item}}</option>
+            </select>
 
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
@@ -26,17 +30,17 @@
                 <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="usuario">
-                Usuario 
+                Usuario
                 <p-sortIcon field="usuario"></p-sortIcon>
                 <p-columnFilter type="text" field="usuario" display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="perfil">
-                Perfil 
+                Perfil
                 <p-sortIcon field="perfil"></p-sortIcon>
                 <p-columnFilter type="text" field="perfil" display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="estado">
-                Estado 
+                Estado
                 <p-sortIcon field="estado"></p-sortIcon>
                 <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
             </th>

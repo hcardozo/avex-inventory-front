@@ -12,13 +12,8 @@ import { AutenticacionInterceptor } from './privada/inteceptors/autenticacion.in
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
-const configuracionUrl: IConfiguracionUrl = {
-  dominio: '26.11.114.212',
-  prefijo: 'api',
-  protocolo: 'https',
-  puerto: '5001'
-};
 
 @NgModule({
   declarations: [
@@ -31,7 +26,7 @@ const configuracionUrl: IConfiguracionUrl = {
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
-    ConfiguracionApexApiModule.forRoot(configuracionUrl)
+    ConfiguracionApexApiModule.forRoot(environment.configuracionUrl)
   ],
   providers: [
     {

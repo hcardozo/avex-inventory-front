@@ -19,6 +19,10 @@ export class ListarUsuarioComponent implements OnInit {
   public listaUsuarios: any[] = [];
   public segundoNivel: any ;
   public datosSesion: any;
+  public pagina: number = 1;
+  public registros: number = 5;
+  public registrosHabilitados: number[] = [5, 10, 20, 50]
+  public totalRegistros: number;
   
   constructor(private usuarioService: UsuarioService,
     private metodosComunes: MetodosComunesService,
@@ -31,18 +35,20 @@ export class ListarUsuarioComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
     this.spinner.show();
-    this.usuarioService.listarUsuarios().subscribe((resultado: any) => {
-      this.spinner.hide();
-      if (resultado?.resultadoList) {
-        this.listaUsuarios = resultado.resultadoList;
-      }
-    }, (error: any) => {
-      this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
-      throw (error);
+    this.usuarioService.infoPaginacion({parametro: { registros: this.registros}}).subscribe((response:any)=> {
+      debugger;
+      this.usuarioService.listarUsuarios({parametro: { pagina: this.pagina, registros: this.registros}}).subscribe((resultado: any) => {
+        this.spinner.hide();
+        if (resultado?.resultadoList) {
+          this.listaUsuarios = resultado.resultadoList;
+        }
+      }, (error: any) => {
+        this.spinner.hide();
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+        throw (error);
+      })
     })
   }
 
@@ -87,6 +93,26 @@ export class ListarUsuarioComponent implements OnInit {
     }, (error: any) => {
       this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
       throw (error);
+    })
+  }
+  
+  public cambioCantidadRegistros(): void {
+    this.refrescarTabla();
+  }
+
+  public refrescarTabla(): void {
+    this.usuarioService.infoPaginacion({parametro: { registros: this.registros}}).subscribe((response:any)=> {
+      debugger;
+      this.usuarioService.listarUsuarios({parametro: { pagina: this.pagina, registros: this.registros}}).subscribe((resultado: any) => {
+        this.spinner.hide();
+        if (resultado?.resultadoList) {
+          this.listaUsuarios = resultado.resultadoList;
+        }
+      }, (error: any) => {
+        this.spinner.hide();
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+        throw (error);
+      })
     })
   }
 
