@@ -102,13 +102,14 @@ export class ListarCampanaComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         let body: IEliminarRegistro = {
-          guidCampana: campana.guidCampana,
+          guid: campana.guidCampana,
           usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
         }
         let indexUsuario: number = this.listarCampanas.findIndex(item => item.guidCampana == campana.guidCampana);
         this.listarCampanas.splice(indexUsuario, 1);
         this.campanaService.eliminarCampana({ parametro: body }).subscribe((response: any) => {
           if (response?.resultado.resultado) {
+            this.cambioCantidadRegistros();
             this.spinner.hide();
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Campaña Eliminada', 'Campaña eliminada de manera correcta.');
           }

@@ -60,6 +60,16 @@
             Campo detalle dirección es requerido
         </span>
 
+        <div class="item-formulario">
+            <label for="telefono">Teléfono</label>
+            <input type="text" placeholder="Teléfono" autocomplete="off" formControlName="telefono"
+                class="form-control" id="telefono" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.telefono.dirty && formulario.telefonoerrors && formulario.telefono.errors.required">
+            Campo telefono es requerido
+        </span>
+
 
 
         <div class="item-formulario">

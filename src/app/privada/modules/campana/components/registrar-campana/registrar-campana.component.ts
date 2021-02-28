@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IRegistrarCampana } from 'avex-api';
 import { CampanaService, DivipolaService, IModificarCampana } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
@@ -94,9 +95,32 @@ export class RegistrarCampanaComponent implements OnInit {
     });
   }
 
+  public agregarCampana(controles: any): void {
+    let datos: IRegistrarCampana = {
+      codDepto: controles.departamento.value,
+      codMunicipio: controles.municipio.value,
+      nombre:controles.nombre.value,
+      direccion: controles.direccion.value,
+      detalleDireccion: controles.detalleDireccion.value,
+      telefono: controles.telefono.value,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      estado:controles.habilitar.value  
+    };
+    this.spinner.show();
+    this.campanaService.registrarCampana({ parametro: datos }).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response?.resultado?.resultado === true) {
+        this.formularioActual.reset();
+        this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Campaña', 'Campaña registrada exitosamente.')
+      }
+    }, (error: any) => {
+      this.spinner.hide();
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Campaña', 'Se presentan problemas al realizar el registro de campaña, por favor intente nuevamente.');
+      throw (error);
+    })
+  }
+
   public modificarCampana(controles: any): void {
-    let datosSesion: any = JSON.parse(localStorage.getItem(USER_SESION_KEY));
-    debugger
     let body: IModificarCampana = {
       guidCampana: controles.guid.value,
       codDepto: controles.departamento.value,
@@ -106,7 +130,7 @@ export class RegistrarCampanaComponent implements OnInit {
       detalleDireccion: controles.detalleDireccion.value,
       telefono: controles.telefono.value,
       estado: controles.habilitar.value,
-      usuarioModificacion: datosSesion.usuarioAvexInfo.usuario
+      usuarioModificacion: this.datosSesion.usuarioAvexInfo.usuario
     }
     this.spinner.show();
     this.campanaService.modificarCampana({ parametro: body }).subscribe((response: any) => {
