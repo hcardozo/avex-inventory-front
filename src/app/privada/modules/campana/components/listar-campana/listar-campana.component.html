@@ -3,7 +3,7 @@
     <ng-template pTemplate="caption">
         <div class="cabecera-tabla">
             <h5 class="titulo">Campañas</h5>
-            
+
             <select [(ngModel)]="registros" (change)="cambioCantidadRegistros()">
                 <option [value]="item" *ngFor="let item of registrosHabilitados">{{item}}</option>
             </select>
@@ -58,3 +58,4 @@
 </p-table>
 <p-paginator #paginador [rows]="registros" [totalRecords]="totalRegistros" [pageLinkSize]="3"
     (onPageChange)="cambiarPagina($event)" [first]="0"></p-paginator>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="0"></p-confirmDialog>

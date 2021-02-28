@@ -13,6 +13,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { PaginatorModule } from 'primeng/paginator';
     MatButtonToggleModule,
     MatSlideToggleModule,
     PaginatorModule,
-    DivipolaModule
+    DivipolaModule,
+    ConfirmDialogModule
   ]
 })
 export class CampanaGuiModule { }
