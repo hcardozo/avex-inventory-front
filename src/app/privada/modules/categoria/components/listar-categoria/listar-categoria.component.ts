@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaService } from 'avex-api';
+import { CategoriaService, IEliminarRegistro } from 'avex-api';
+import { IBodyServicio } from 'avex-api/lib/interfaces/body-servicio.interface';
+import { ICambiarEstado } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
 import { MetodosComunesService } from 'src/app/compartido/services/metodosComunes/metodos-comunes.service';
@@ -16,24 +19,25 @@ export class ListarCategoriaComponent implements OnInit {
 
   @ViewChild('paginador') paginador: any;
 
-  public listarCategorias: any[] = [];
-  public segundoNivel: any ;
+  public listaCategorias: any[] = [];
+  public segundoNivel: any;
   public datosSesion: any;
   public pagina: number = 1;
   public registros: number = 5;
   public registrosHabilitados: number[] = [5, 10, 20, 50]
   public totalPaginas: number;
   public totalRegistros: number;
-  
+
   constructor(private categoriaService: CategoriaService,
     private metodosComunes: MetodosComunesService,
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService) { 
-      
+    private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService) {
+
     this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
-    }
+  }
 
   ngOnInit(): void {
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
@@ -49,7 +53,7 @@ export class ListarCategoriaComponent implements OnInit {
         this.categoriaService.listarCategoria({ parametro: { pagina: this.pagina, registros: this.registros } }).subscribe((resultado: any) => {
           this.spinner.hide();
           if (resultado?.resultadoList) {
-            this.listarCategorias = resultado.resultadoList;
+            this.listaCategorias = resultado.resultadoList;
           }
         }, (error: any) => {
           this.spinner.hide();
@@ -69,5 +73,50 @@ export class ListarCategoriaComponent implements OnInit {
   public cambiarPagina(evento: any): void {
     this.pagina = evento.page + 1;
     this.refrescarTabla();
+  }
+
+  public eliminarCategoria(categoria: any): void {
+    this.confirmationService.confirm({
+      message: `¿Esta seguro que desea eliminar la categoria ${categoria.nombre}?`,
+      header: 'Eliminar Categoria',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        let body: IBodyServicio<IEliminarRegistro> = {
+          parametro: {
+            usuarioModificacion: this.datosSesion.usuarioAvexInfo.nombre,
+            guid: categoria.guidCategoria
+
+          }
+        }
+        this.categoriaService.eliminarCategoria(body).subscribe((response: any) => {
+          if (response?.resultado.resultado) {
+            this.cambioCantidadRegistros();
+            this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Categoria Eliminada', 'Categoria eliminada de manera correcta.');
+          }
+
+        }, (error: any) => {
+          this.spinner.hide();
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Categoria', 'Se presentan problemas al realizar eliminacion de la categoria, por favor intente nuevamente.');
+          throw (error);
+        });
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  public cambiarEstado(event: any, usuario: any) {
+    this.spinner.show();
+    let body: ICambiarEstado = {
+      guid: usuario.guid,
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+    }
+    this.categoriaService.cambiarEstadoCategoria({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+      this.spinner.hide();
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
+      throw (error);
+    })
   }
 }

@@ -34,15 +34,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ReactiveFormsModule,
     PaginatorModule,
     PerfilModule,
-    ConfirmDialogModule,
     MessagesModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AutenticacionInterceptor,
-      multi: true
-    }
   ]
 })
 export class UsuarioGuiModule { }

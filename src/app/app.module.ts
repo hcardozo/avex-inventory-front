@@ -22,11 +22,11 @@ import { MessagesModule } from 'primeng/messages';
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ToastModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     NgxSpinnerModule,
     ConfiguracionApexApiModule.forRoot(environment.configuracionUrl)
   ],

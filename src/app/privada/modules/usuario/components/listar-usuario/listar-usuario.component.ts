@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { IEliminarUsuario, UsuarioService } from 'avex-api';
-import { ICambiarEstadoUsuario } from 'avex-api';
+import { IEliminarRegistro, UsuarioService } from 'avex-api';
+import { ICambiarEstado } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
@@ -48,7 +48,7 @@ export class ListarUsuarioComponent implements OnInit {
 
   public cambiarEstado(event: any, usuario: any) {
     this.spinner.show();
-    let body: ICambiarEstadoUsuario = {
+    let body: ICambiarEstado = {
       guid: usuario.guid,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
@@ -77,7 +77,7 @@ export class ListarUsuarioComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.spinner.show();
-        let body: IEliminarUsuario = {
+        let body: IEliminarRegistro = {
           guid: usuario.guid,
           usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
         }

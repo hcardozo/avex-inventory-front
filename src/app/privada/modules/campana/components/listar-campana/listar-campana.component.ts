@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { CampanaService, IEliminarCampana } from 'avex-api';
-import { ICambiarEstadoCampana } from 'avex-api/lib/modules/campana/interfaces/cambiar-estado-campana.interface';
+import { CampanaService, ICambiarEstado, IEliminarRegistro} from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
@@ -73,11 +72,8 @@ export class ListarCampanaComponent implements OnInit {
     this.refrescarTabla();
   }
 
-  public test(event:any,campana: any){
-    debugger;
-  }
   public cambiarEstado(event: any, campana: any) {
-    let body: ICambiarEstadoCampana = {
+    let body: ICambiarEstado = {
       guid: campana.guidCampana,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
@@ -105,7 +101,7 @@ export class ListarCampanaComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.spinner.show();
-        let body: IEliminarCampana = {
+        let body: IEliminarRegistro = {
           guidCampana: campana.guidCampana,
           usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
         }

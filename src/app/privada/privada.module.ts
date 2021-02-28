@@ -15,7 +15,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { CompartidoModule } from '../compartido/compartido.module';
 import { ButtonModule } from 'primeng/button';
-import { Ripple, RippleModule } from 'primeng/ripple';
+import { RippleModule } from 'primeng/ripple';
 @NgModule({
   declarations: [MaestroComponent, InicioComponent],
   imports: [
