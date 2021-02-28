@@ -102,7 +102,7 @@ export class ListarCampanaComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         let body: IEliminarRegistro = {
-          guidCampana: campana.guidCampana,
+          guid: campana.guidCampana,
           usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
         }
         let indexUsuario: number = this.listarCampanas.findIndex(item => item.guidCampana == campana.guidCampana);

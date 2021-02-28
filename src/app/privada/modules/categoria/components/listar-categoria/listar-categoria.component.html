@@ -34,7 +34,7 @@
         <tr>
             <td><span class="p-column-title">Categoria</span>{{categoria.nombre}}</td>
             <td><span class="p-column-title">Estado</span>
-                <p-inputSwitch (onChange)="cambiarEstado($event, categoria)" [(ngModel)]="categoria.estado">
+                <p-inputSwitch (onChange)="cambiarEstado(categoria)" [(ngModel)]="categoria.estado">
                 </p-inputSwitch>
             </td>
             <td class="acciones">

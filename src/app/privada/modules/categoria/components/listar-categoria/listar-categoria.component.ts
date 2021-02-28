@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { CategoriaService, IEliminarRegistro } from 'avex-api';
 import { IBodyServicio } from 'avex-api/lib/interfaces/body-servicio.interface';
 import { ICambiarEstado } from 'avex-api';
@@ -63,6 +63,17 @@ export class ListarCategoriaComponent implements OnInit {
       }
     })
   }
+  
+  public modificarCategoria(datosCategoria: any): void {
+    let navigationExtas: NavigationExtras = {
+      state: {
+        datosCategoria
+      },
+      relativeTo: this.activatedRoute.parent,
+      skipLocationChange: true
+    }
+    this.router.navigate([`./modificarCategoria`], navigationExtas);
+  }
 
   public cambioCantidadRegistros(): void {
     this.pagina = 1;
@@ -107,10 +118,10 @@ export class ListarCategoriaComponent implements OnInit {
     });
   }
 
-  public cambiarEstado(event: any, usuario: any) {
+  public cambiarEstado(usuario: any) {
     this.spinner.show();
     let body: ICambiarEstado = {
-      guid: usuario.guid,
+      guid: usuario.guidCategoria,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
     this.categoriaService.cambiarEstadoCategoria({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {

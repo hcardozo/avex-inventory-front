@@ -95,8 +95,6 @@ export class RegistrarCampanaComponent implements OnInit {
   }
 
   public modificarCampana(controles: any): void {
-    let datosSesion: any = JSON.parse(localStorage.getItem(USER_SESION_KEY));
-    debugger
     let body: IModificarCampana = {
       guidCampana: controles.guid.value,
       codDepto: controles.departamento.value,
@@ -106,7 +104,7 @@ export class RegistrarCampanaComponent implements OnInit {
       detalleDireccion: controles.detalleDireccion.value,
       telefono: controles.telefono.value,
       estado: controles.habilitar.value,
-      usuarioModificacion: datosSesion.usuarioAvexInfo.usuario
+      usuarioModificacion: this.datosSesion.usuarioAvexInfo.usuario
     }
     this.spinner.show();
     this.campanaService.modificarCampana({ parametro: body }).subscribe((response: any) => {
