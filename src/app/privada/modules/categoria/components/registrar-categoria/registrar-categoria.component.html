@@ -1,1 +1,49 @@
-<p>registrar-categoria works!</p>
+<div class="contenedor" *ngIf="formularioActual">
+    <h2>
+        <i class="fa fa-align-justify"></i>
+        {{ this.parametrosRuta?.modificacion ? ' Modificar' : 'Agregar ' }} Categoria
+    </h2>
+    <form [formGroup]="formularioActual">
+        
+        <div class="item-formulario">
+            <label for="nombre">Nombre</label>
+            <input type="text" placeholder="Nombre de la Categoria" autocomplete="off" formControlName="nombre"
+                class="form-control" id="nombre" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.nombre.dirty && formulario.nombre.errors && formulario.nombre.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="descripcion">Descripcion</label>
+            <textarea type="text" placeholder="Descripcion" autocomplete="off" formControlName="descripcion"
+                class="form-control" id="descripcion"> </textarea>
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.descripcion.dirty && formulario.descripcion.errors && formulario.descripcion.errors.required">
+            Campo descripcion es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label class="label-personalizado" for="habilitar">Habilitar</label>
+            <mat-slide-toggle formControlName="habilitar" color="primary" id="habilitar">
+
+            </mat-slide-toggle>
+        </div>
+
+        <div class="contenedor-botones">
+            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="registrarCategoria(formulario)" [disabled]="!formularioActual.valid">
+                Agregar
+            </button>
+
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="modificarCategoria(formulario)" [disabled]="!formularioActual.valid">
+                Modificar
+            </button>
+        </div>
+    </form>
+
+
+</div>
