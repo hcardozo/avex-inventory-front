@@ -4,6 +4,10 @@
         <div class="cabecera-tabla">
             <h5 class="titulo">Categorias</h5>
 
+            <select [(ngModel)]="registros" (change)="cambioCantidadRegistros()">
+                <option [value]="item" *ngFor="let item of registrosHabilitados">{{item}}</option>
+            </select>
+            
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input type="text" pInputText (input)="dt.filterGlobal($event.target.value, 'contains')"
