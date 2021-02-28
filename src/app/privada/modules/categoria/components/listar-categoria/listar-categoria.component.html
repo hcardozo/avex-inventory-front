@@ -1,4 +1,4 @@
-<p-table #dt [value]="listarCategorias" [globalFilterFields]="['nombre','estado']" [rowHover]="true" dataKey="id"
+<p-table #dt [value]="listaCategorias" [globalFilterFields]="['nombre','estado']" [rowHover]="true" dataKey="id"
     styleClass="p-datatable-responsive-demo">
     <ng-template pTemplate="caption">
         <div class="cabecera-tabla">
@@ -45,3 +45,5 @@
 </p-table>
 <p-paginator #paginador [rows]="registros" [totalRecords]="totalRegistros" [pageLinkSize]="3"
     (onPageChange)="cambiarPagina($event)" [first]="0"></p-paginator>
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="0"></p-confirmDialog>

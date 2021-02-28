@@ -20,11 +20,11 @@ import { environment } from 'src/environments/environment';
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ToastModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     NgxSpinnerModule,
     ConfiguracionApexApiModule.forRoot(environment.configuracionUrl),
   ],

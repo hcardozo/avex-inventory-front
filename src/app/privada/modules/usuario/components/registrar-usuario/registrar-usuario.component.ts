@@ -104,7 +104,6 @@ export class RegistrarUsuarioComponent implements OnInit {
       usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
       estado:controles.habilitar.value  
     };
-    debugger
     this.spinner.show();
     this.usuarioService.registrarUsuario({ parametro: datos }).subscribe((response: any) => {
       this.spinner.hide();
