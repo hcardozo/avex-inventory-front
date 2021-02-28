@@ -104,7 +104,6 @@ export class RegistrarUsuarioComponent implements OnInit {
       usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
       estado:controles.habilitar.value  
     };
-    debugger
     this.spinner.show();
     this.usuarioService.registrarUsuario({ parametro: datos }).subscribe((response: any) => {
       this.spinner.hide();
@@ -134,6 +133,7 @@ export class RegistrarUsuarioComponent implements OnInit {
 
   public modificarUsuario(controles: any): void {
     let datosSesion: any = JSON.parse(localStorage.getItem(USER_SESION_KEY));
+    debugger
     let body: IModificarUsuario = {
       guid: controles.guid.value,
       nombre: controles.nombreCompleto.value,
@@ -142,7 +142,7 @@ export class RegistrarUsuarioComponent implements OnInit {
       email: controles.correoCorporativo.value,
       telefono: controles.telefono.value,
       guidPerfil: controles.perfil.value,
-      estado: controles.perfil.habilitar,
+      estado: controles.habilitar.value,
       usuarioModificacion: datosSesion.usuarioAvexInfo.usuario
     }
     this.spinner.show();

@@ -84,8 +84,8 @@ export class ListarUsuarioComponent implements OnInit {
         let indexUsuario: number = this.listaUsuarios.findIndex(item => item.guid == usuario.guid);
         this.listaUsuarios.splice(indexUsuario, 1);
         this.usuarioService.eliminarUsuario({ parametro: body }).subscribe((response: any) => {
+          this.spinner.hide();
           if (response?.resultado.resultado) {
-            this.spinner.hide();
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Usuario Eliminado', 'Usuario eliminado de manera correcta.');
           }
     

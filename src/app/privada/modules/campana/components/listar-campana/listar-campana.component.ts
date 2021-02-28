@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CampanaService } from 'avex-api';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { CampanaService, IEliminarCampana } from 'avex-api';
 import { ICambiarEstadoCampana } from 'avex-api/lib/modules/campana/interfaces/cambiar-estado-campana.interface';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
 import { MetodosComunesService } from 'src/app/compartido/services/metodosComunes/metodos-comunes.service';
@@ -31,8 +32,8 @@ export class ListarCampanaComponent implements OnInit {
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService) { 
-      
+    private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService) { 
     this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
     }
 
@@ -86,35 +87,45 @@ export class ListarCampanaComponent implements OnInit {
     })
   }
 
-  // public modificarUsuario(usuario: any): void {
-  //   let navigationExtas: NavigationExtras = {
-  //     state: {
-  //       usuario
-  //     },
-  //     relativeTo: this.activatedRoute.parent,
-  //     skipLocationChange: true
-  //   }
-  //   this.router.navigate([`./modificarUsuario`], navigationExtas);
-  // }
+  public modificarCampana(campana: any): void {
+    let navigationExtas: NavigationExtras = {
+      state: {
+        campana
+      },
+      relativeTo: this.activatedRoute.parent,
+      skipLocationChange: true
+    }
+    this.router.navigate([`./modificarCampana`], navigationExtas);
+  }
 
-  // public eliminarUsuario(usuario: any): void {
-  //   let body: IEliminarUsuario = {
-  //     usuarioCreacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-  //     fechaCreacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-  //     guid: usuario.guid,
-  //     usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre,
-  //     fechaModificacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss')
-  //   }
-  //   let indexUsuario: number = this.listaUsuarios.findIndex(item => item.guid == usuario.guid);
-  //   this.listaUsuarios.splice(indexUsuario, 1);
-  //   this.usuarioService.eliminarUsuario({ parametro: body }).subscribe((response: any) => {
-  //     if (response?.resultado.resultado) {
-  //       this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Usuario Eliminado', 'Usuario eliminado de manera correcta.');
-  //     }
-
-  //   }, (error: any) => {
-  //     this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
-  //     throw (error);
-  //   })
-  // }
+  public eliminarCampana(campana: any): void {
+    this.confirmationService.confirm({
+      message: `Esta seguro que desea eliminar la campaña ${campana.nombre}?`,
+      header: 'Eliminar Campaña',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        let body: IEliminarCampana = {
+          guidCampana: campana.guidCampana,
+          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+        }
+        let indexUsuario: number = this.listarCampanas.findIndex(item => item.guidCampana == campana.guidCampana);
+        this.listarCampanas.splice(indexUsuario, 1);
+        this.campanaService.eliminarCampana({ parametro: body }).subscribe((response: any) => {
+          if (response?.resultado.resultado) {
+            this.spinner.hide();
+            this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Campaña Eliminada', 'Campaña eliminada de manera correcta.');
+          }
+    
+        }, (error: any) => {
+          this.spinner.hide();
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar la Campaña', 'Se presentan problemas al realizar eliminacion de la campaña, por favor intente nuevamente.');
+          throw (error);
+        })
+      },
+      reject: () => {
+          
+      }
+  });
+  }
 }

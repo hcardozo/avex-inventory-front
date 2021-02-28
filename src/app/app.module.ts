@@ -13,6 +13,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -26,7 +28,7 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
-    ConfiguracionApexApiModule.forRoot(environment.configuracionUrl),
+    ConfiguracionApexApiModule.forRoot(environment.configuracionUrl)
   ],
   providers: [
     {
