@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IModificarUsuario, IRegistrarUsuario, UsuarioService } from 'avex-api';
+import { IModificarUsuario, IRegistrarUsuario, PerfilService, TipoDocumentoService, UsuarioService } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
@@ -20,12 +21,12 @@ export class RegistrarUsuarioComponent implements OnInit {
     clave: new FormControl('', [Validators.required]),
     confirmacionClave: new FormControl('', [Validators.required]),
     nombreCompleto: new FormControl('', [Validators.required]),
-    tipoDeDocumento: new FormControl('1', [Validators.required]),
+    tipoDeDocumento: new FormControl(null, [Validators.required]),
     numeroIdentificacion: new FormControl('', [Validators.required]),
     correoCorporativo: new FormControl('', [Validators.required, Validators.pattern(new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,3}'))]),
     confirmacionCorreoCorporativo: new FormControl('', [Validators.required, Validators.pattern(new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,3}'))]),
     telefono: new FormControl('', [Validators.required]),
-    perfil: new FormControl('', [Validators.required]),
+    perfil: new FormControl( null, [Validators.required]),
     habilitar: new FormControl(true, [Validators.required]),
   });
 
@@ -33,30 +34,43 @@ export class RegistrarUsuarioComponent implements OnInit {
     usuario: new FormControl('', [Validators.required]),
     guid: new FormControl('', [Validators.required]),
     nombreCompleto: new FormControl('', [Validators.required]),
-    tipoDeDocumento: new FormControl('1', [Validators.required]),
+    tipoDeDocumento: new FormControl(null, [Validators.required]),
     numeroIdentificacion: new FormControl('', [Validators.required]),
     correoCorporativo: new FormControl('', [Validators.required, Validators.pattern(new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[A-Za-z]{2,3}'))]),
     telefono: new FormControl('', [Validators.required]),
-    perfil: new FormControl('', [Validators.required]),
+    perfil: new FormControl(null, [Validators.required]),
     habilitar: new FormControl(true, [Validators.required]),
   });
 
   public formularioActual: FormGroup;
 
   public parametrosRuta: any = {};
+  public datosSesion: any;
+  public listTipoDocumento: { [index: string]: string }[];
+  public listPerfil: { [index: string]: string }[];
 
   constructor(
     public formBuilder: FormBuilder,
     public metodosComunes: MetodosComunesService,
     public usuarioService: UsuarioService,
     public alertService: AlertaService,
+    public tipoDocumento:TipoDocumentoService,
+    public perfiles: PerfilService,
     private spinner: NgxSpinnerService,
     private router: Router) {
     this.parametrosRuta.datosUsuario = this.router.getCurrentNavigation()?.extras?.state?.usuario;
     this.parametrosRuta.modificacion = this.parametrosRuta?.datosUsuario ? true : false;
+
   }
 
   ngOnInit(): void {
+    this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
+    this.tipoDocumento.listarTiposDocumento().subscribe((response:any)=>{
+      this.listTipoDocumento = response.tipoMensaje == 0 ? response.resultadoList : null;
+    });
+    this.perfiles.listarPerfilLite().subscribe((response: any) => {
+      this.listPerfil = response.tipoMensaje == 0 ? response.resultadoList : null;
+    });
     if (this.parametrosRuta.modificacion) {
       this.formularioActual = this.formularioModificacionUsuario;
       this.asignarValoresModificacion();
@@ -77,25 +91,25 @@ export class RegistrarUsuarioComponent implements OnInit {
   }
 
   public agregarUsuario(controles: any): void {
-    let datosSesion: any = JSON.parse(localStorage.getItem(USER_SESION_KEY));
     let datos: IRegistrarUsuario = {
       usuario: controles.usuario.value,
       contrasena: controles.clave.value,
       confirmarContrasena: controles.confirmacionClave.value,
-      guid: datosSesion ? datosSesion.usuarioAvexInfo.guid : '',
       nombre: controles.nombreCompleto.value,
       tipo_documento: controles.tipoDeDocumento.value,
       documento: controles.numeroIdentificacion.value,
       email: controles.correoCorporativo.value,
       telefono: controles.telefono.value,
-      id_perfil: controles.perfil.value,
-      usuarioCreacion: 'test',
-      fechaCreacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss')
+      guidPerfil: controles.perfil.value,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      estado:controles.habilitar.value  
     };
+    debugger
     this.spinner.show();
     this.usuarioService.registrarUsuario({ parametro: datos }).subscribe((response: any) => {
       this.spinner.hide();
       if (response?.resultado?.resultado === true) {
+        this.formularioActual.reset();
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Usuario', 'Usuario registrado exitosamente.')
       }
     }, (error: any) => {
@@ -121,17 +135,15 @@ export class RegistrarUsuarioComponent implements OnInit {
   public modificarUsuario(controles: any): void {
     let datosSesion: any = JSON.parse(localStorage.getItem(USER_SESION_KEY));
     let body: IModificarUsuario = {
-      usuario: controles.usuario.value,
       guid: controles.guid.value,
       nombre: controles.nombreCompleto.value,
       tipo_documento: controles.tipoDeDocumento.value,
       documento: controles.numeroIdentificacion.value,
       email: controles.correoCorporativo.value,
       telefono: controles.telefono.value,
-      id_perfil: controles.perfil.value,
-      estado: controles.perfil.estado,
-      usuarioModificacion: datosSesion.usuarioAvexInfo.usuario,
-      fechaModificacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss')
+      guidPerfil: controles.perfil.value,
+      estado: controles.perfil.habilitar,
+      usuarioModificacion: datosSesion.usuarioAvexInfo.usuario
     }
     this.spinner.show();
     this.usuarioService.modificarUsuario({ parametro: body }).subscribe((response: any) => {

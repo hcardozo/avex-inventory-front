@@ -11,7 +11,7 @@ import { IConfiguracionUrl } from 'avex-api/lib/interfaces/configuracion-url.int
 import { AutenticacionInterceptor } from './privada/inteceptors/autenticacion.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 
 
@@ -26,7 +26,7 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
-    ConfiguracionApexApiModule.forRoot(environment.configuracionUrl)
+    ConfiguracionApexApiModule.forRoot(environment.configuracionUrl),
   ],
   providers: [
     {
@@ -34,7 +34,8 @@ import { environment } from 'src/environments/environment';
       useClass: AutenticacionInterceptor,
       multi: true
     },
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

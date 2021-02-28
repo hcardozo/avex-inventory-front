@@ -1,4 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.contenedor {
+    background: rgba($color: #000000, $alpha: 0.1);
+    margin: 2% 10% !important;
+    padding: 20px 40px;
+}
+
+.item-formulario {
+    display: flex;
+    margin: 5px 0px;
+    > label {
+        margin: auto;
+        min-width: 35%;
+    }
+
+    > input {
+        height: 30px;
+        border-radius: 0.5rem;
+    }
+
+    > button {
+        padding: 0px 20px;
+        margin-left: 5px;
+        height: 28px;
+    }
+
+    > .label-personalizado {
+        margin: auto 0;
+    }
+}
+
+.text-danger {
+    margin-left: 35%;
+}
+
+.contenedor-botones {
+    button {
+        margin-left: 90%;
+    }
+}

@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CompartidoModule,
     InputSwitchModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    PaginatorModule
   ]
 })
 export class CategoriaGuiModule { }

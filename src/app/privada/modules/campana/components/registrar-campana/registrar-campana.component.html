@@ -1,1 +1,88 @@
-<p>registrar-campana works!</p>
+<div class="contenedor" *ngIf="formularioActual">
+    <h2>
+        <i class="fa fa-align-justify"></i>
+        {{ this.parametrosRuta?.modificacion ? ' Modificar' : 'Agregar ' }} Campaña
+    </h2>
+    <form [formGroup]="formularioActual">
+
+        <div class="item-formulario">
+            <label for="departamento">Departamentos</label>
+            <select placeholder="Departamentos" formControlName="departamento" class="form-control" id="departamento"
+                (change)="consultarMunicipios(formulario)">
+                <option hidden [value]="null">Seleccione un departamento</option>
+                <option *ngFor="let departamento of listDepartamentos" [value]="departamento.codDepto">
+                    {{departamento.nombreDepartamento}}</option>
+            </select>
+        </div>
+        <span class="text-danger" *ngIf="formulario.departamento.dirty && formulario.departamento.errors?.required">
+            Campo departamento es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="municipio">Municipios</label>
+            <select placeholder="Municipios" formControlName="municipio" class="form-control" id="municipio">
+                <option hidden [value]="null">Seleccione un municipio</option>
+                <option *ngFor="let municipio of listMunicipios" [value]="municipio.codMunicipio">
+                    {{municipio.nombreMunicipio}}</option>
+            </select>
+        </div>
+        <span class="text-danger" *ngIf="formulario.municipio.dirty && formulario.municipio.errors?.required">
+            Campo municipio es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="nombre">Nombre</label>
+            <input type="text" placeholder="Nombre de la Campaña" autocomplete="off" formControlName="nombre"
+                class="form-control" id="nombre" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.nombre.dirty && formulario.nombre.errors && formulario.nombre.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="direccion">Dirección</label>
+            <input type="text" placeholder="Dirección" autocomplete="off" formControlName="direccion"
+                class="form-control" id="direccion" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.direccion.dirty && formulario.direccion.errors && formulario.direccion.errors.required">
+            Campo dirección es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="detalleDireccion">Detalle Dirección</label>
+            <input type="text" placeholder="Dirección" autocomplete="off" formControlName="detalleDireccion"
+                class="form-control" id="detalleDireccion" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.detalleDireccion.dirty && formulario.detalleDireccion.errors && formulario.detalleDireccion.errors.required">
+            Campo detalle dirección es requerido
+        </span>
+
+
+
+        <div class="item-formulario">
+            <label class="label-personalizado" for="habilitar">Habilitar</label>
+            <!-- <input type="text" placeholder="Habilitar" autocomplete="off" formControlName="habilitar"
+                class="form-control" id="habilitar" /> -->
+            <mat-slide-toggle formControlName="habilitar" color="primary" id="habilitar">
+
+            </mat-slide-toggle>
+        </div>
+
+        <div class="contenedor-botones">
+            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="agregarUsuario(formulario)" [disabled]="!formularioActual.valid">
+                Agregar
+            </button>
+
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="modificarUsuario(formulario)" [disabled]="!formularioActual.valid">
+                Modificar
+            </button>
+        </div>
+    </form>
+
+
+</div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IEliminarUsuario, UsuarioService } from 'avex-api';
 import { ICambiarEstadoUsuario } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
 import { MetodosComunesService } from 'src/app/compartido/services/metodosComunes/metodos-comunes.service';
@@ -32,23 +33,27 @@ export class ListarUsuarioComponent implements OnInit {
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService,
+    private primengConfig: PrimeNGConfig) {
 
     this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
   }
 
   ngOnInit(): void {
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
+    this.primengConfig.ripple = true;
     this.refrescarTabla();
   }
 
   public cambiarEstado(event: any, usuario: any) {
+    this.spinner.show();
     let body: ICambiarEstadoUsuario = {
       guid: usuario.guid,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre,
-      fechaModificacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss')
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
-    this.usuarioService.cambiarEstadoUsuario({ parametro: body }).subscribe(() => { }, (error: any) => {
+    this.usuarioService.cambiarEstadoUsuario({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+      this.spinner.hide();
       this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
       throw (error);
     })
@@ -66,24 +71,34 @@ export class ListarUsuarioComponent implements OnInit {
   }
 
   public eliminarUsuario(usuario: any): void {
-    let body: IEliminarUsuario = {
-      usuarioCreacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-      fechaCreacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-      guid: usuario.guid,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre,
-      fechaModificacion: this.metodosComunes.obtenerFecha(new Date(), 'yyyy-MM-dd HH:mm:ss')
-    }
-    let indexUsuario: number = this.listaUsuarios.findIndex(item => item.guid == usuario.guid);
-    this.listaUsuarios.splice(indexUsuario, 1);
-    this.usuarioService.eliminarUsuario({ parametro: body }).subscribe((response: any) => {
-      if (response?.resultado.resultado) {
-        this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Usuario Eliminado', 'Usuario eliminado de manera correcta.');
+    this.confirmationService.confirm({
+      message: `Esta seguro que desea eliminar el usario ${usuario.usuario}?`,
+      header: 'Eliminar Usuario',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.spinner.show();
+        let body: IEliminarUsuario = {
+          guid: usuario.guid,
+          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+        }
+        let indexUsuario: number = this.listaUsuarios.findIndex(item => item.guid == usuario.guid);
+        this.listaUsuarios.splice(indexUsuario, 1);
+        this.usuarioService.eliminarUsuario({ parametro: body }).subscribe((response: any) => {
+          if (response?.resultado.resultado) {
+            this.spinner.hide();
+            this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Usuario Eliminado', 'Usuario eliminado de manera correcta.');
+          }
+    
+        }, (error: any) => {
+          this.spinner.hide();
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
+          throw (error);
+        })
+      },
+      reject: () => {
+          
       }
-
-    }, (error: any) => {
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
-      throw (error);
-    })
+  });
   }
 
   public cambioCantidadRegistros(): void {
