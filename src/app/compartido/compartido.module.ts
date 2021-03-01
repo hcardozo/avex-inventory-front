@@ -6,6 +6,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertaService } from './services/alerta/alerta.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -13,7 +20,15 @@ import { ConfirmationService } from 'primeng/api';
   declarations: [NotFoundComponent],
   imports: [
     CommonModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    TableModule,
+    InputSwitchModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+    PaginatorModule
   ],
   providers: [
     MetodosComunesService,
@@ -23,7 +38,15 @@ import { ConfirmationService } from 'primeng/api';
     ConfirmationService
   ],
   exports: [
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    TableModule,
+    InputSwitchModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+    PaginatorModule
   ]
 })
 export class CompartidoModule { }

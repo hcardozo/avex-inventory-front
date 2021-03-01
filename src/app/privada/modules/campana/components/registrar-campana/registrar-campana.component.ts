@@ -111,6 +111,7 @@ export class RegistrarCampanaComponent implements OnInit {
       this.spinner.hide();
       if (response?.resultado?.resultado === true) {
         this.formularioActual.reset();
+        this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Campaña', 'Campaña registrada exitosamente.')
       }
     }, (error: any) => {

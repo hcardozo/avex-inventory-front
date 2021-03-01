@@ -21,18 +21,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   imports: [
     CommonModule,
     CampanaRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    TableModule,
     CampanaModule,
     CompartidoModule,
-    InputSwitchModule,
-    MatButtonToggleModule,
-    MatSlideToggleModule,
     PaginatorModule,
-    DivipolaModule,
-    ConfirmDialogModule
+    DivipolaModule
   ]
 })
 export class CampanaGuiModule { }

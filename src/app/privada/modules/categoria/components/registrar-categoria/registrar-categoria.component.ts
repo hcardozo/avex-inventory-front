@@ -5,7 +5,6 @@ import { CategoriaService, IModificarCategoria, IRegistrarCategoria } from 'avex
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
 import { AlertaService } from 'src/app/compartido/services/alerta/alerta.service';
-import { MetodosComunesService } from 'src/app/compartido/services/metodosComunes/metodos-comunes.service';
 import { USER_SESION_KEY } from 'src/environments/constantes';
 
 @Component({
@@ -32,10 +31,7 @@ export class RegistrarCategoriaComponent implements OnInit {
 
   public parametrosRuta: any = {};
   public datosSesion: any;
-  public listDepartamentos: { [index: string]: string }[];
-  public listMunicipios: { [index: string]: string }[];
   constructor(
-    public metodosComunes: MetodosComunesService,
     public categoriaService: CategoriaService,
     public alertService: AlertaService,
     private spinner: NgxSpinnerService,
@@ -78,11 +74,12 @@ export class RegistrarCategoriaComponent implements OnInit {
       this.spinner.hide();
       if (response?.resultado?.resultado === true) {
         this.formularioActual.reset();
-        this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Categoria', 'Categoria modificada exitosamente.')
+        this.formulario.habilitar.setValue(true);
+        this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Categoria', 'Categoria registrada exitosamente.')
       }
     }, (error: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Categoria', 'Se presentan problemas al realizar la modificacion de la categoria, por favor intente nuevamente.');
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Categoria', 'Se presentan problemas al realizar el registro de la categoria, por favor intente nuevamente.');
       throw (error);
     })
   }

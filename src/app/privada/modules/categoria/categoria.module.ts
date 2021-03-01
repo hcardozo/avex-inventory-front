@@ -21,15 +21,7 @@ import { PaginatorModule } from 'primeng/paginator';
     CommonModule,
     CompartidoModule,
     CategoriaRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    TableModule,
-    CategoriaModule,
-    InputSwitchModule,
-    MatButtonToggleModule,
-    MatSlideToggleModule,
-    PaginatorModule
+    CategoriaModule
   ]
 })
 export class CategoriaGuiModule { }
