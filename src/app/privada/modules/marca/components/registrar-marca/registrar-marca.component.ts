@@ -54,7 +54,6 @@ export class RegistrarMarcaComponent implements OnInit {
 
   private asignarValoresModificacion(): void {
     this.formulario.nombre.setValue(this.parametrosRuta.datosMarca.nombre);
-    this.formulario.descripcion.setValue(this.parametrosRuta.datosMarca.descripcion);
     this.formulario.guidMarca.setValue(this.parametrosRuta.datosMarca.guidMarca);
     this.formulario.habilitar.setValue(this.parametrosRuta.datosMarca.estado);
     this.formularioActual.updateValueAndValidity();
