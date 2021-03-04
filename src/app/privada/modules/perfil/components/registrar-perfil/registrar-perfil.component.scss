@@ -1,0 +1,7 @@
+::ng-deep .multiselect-modulos {
+    min-width: 65%;
+    max-width: 65%;
+    > .p-multiselect {
+        width: 100% !important;
+    }
+}

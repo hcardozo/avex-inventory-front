@@ -24,12 +24,17 @@
             *ngIf="formulario.nombre.dirty && formulario.nombre.errors && formulario.nombre.errors.required">
             Campo nombre es requerido
         </span>
+
         <div class="item-formulario">
-            <label for="funciones">Funciones</label>
-            <p-multiSelect [options]="cities" [(ngModel)]="selectedCities2" defaultLabel="Select a City" optionLabel="name" display="chip">
-                
+            <label for="Funciones">Funciones</label>
+            <p-multiSelect class="multiselect-modulos"  [options]="listaModulos" formControlName="modulos" defaultLabel="Seleccione un modulo" optionLabel="nombreModulo" display="chip" >
+
             </p-multiSelect>
         </div>
+        <span class="text-danger"
+            *ngIf="formulario.modulos.dirty && formulario.modulos.errors && formulario.modulos.errors.required">
+            Campo funciones es requerido
+        </span>
         
 
         <div class="item-formulario">
@@ -41,16 +46,14 @@
 
         <div class="contenedor-botones">
             <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary"
-                (click)="registrarMarca(formulario)" [disabled]="!formularioActual.valid">
+                (click)="agregarPerfil(formulario)" [disabled]="!formularioActual.valid">
                 Agregar
             </button>
 
             <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary"
-                (click)="modificarMarca(formulario)" [disabled]="!formularioActual.valid">
+                (click)="modificarPerfil(formulario)" [disabled]="!formularioActual.valid">
                 Modificar
             </button>
         </div>
     </form>
-
-
 </div>

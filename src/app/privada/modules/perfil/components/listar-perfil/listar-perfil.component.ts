@@ -44,10 +44,6 @@ export class ListarPerfilComponent implements OnInit {
     this.refrescarTabla();
   }
 
-  public listarModulos():void{
-
-  }
-
   public refrescarTabla(): void {
     this.spinner.show();
     this.perfilService.infoPaginacion({ parametro: { registros: this.registros } }).subscribe((response: any) => {
