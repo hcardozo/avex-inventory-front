@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "deploy-pages":"ng build --prod --base-href https://hcardozo.github.io/avex-inventory-front/ && npx angular-cli-ghpages --dir=dist/avex-inventory",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
