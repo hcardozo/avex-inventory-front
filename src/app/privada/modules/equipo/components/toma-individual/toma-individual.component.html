@@ -1,0 +1,119 @@
+<div class="contenedor" *ngIf="formularioActual">
+    <h2>
+        <i class="fa fa-align-justify"></i>
+        {{ this.parametrosRuta?.modificacion ? ' Modificar Equipo' : 'Toma individual inventario ' }} 
+    </h2>
+    <form [formGroup]="formularioActual">
+
+        <div class="item-formulario">
+            <label for="codigoBarras">Codigo de Barras</label>
+            <input type="text" placeholder="Ingrese codigo de barras" autocomplete="off" formControlName="codigoBarras"
+                class="form-control" id="codigoBarras" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.codigoBarras.dirty && formulario.codigoBarras.errors && formulario.codigoBarras.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="codigoEtiqueta">Serial - Tag</label>
+            <input type="text" placeholder="Ingrese el serial" autocomplete="off" formControlName="codigoEtiqueta"
+                class="form-control" id="codigoEtiqueta" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.codigoEtiqueta.dirty && formulario.codigoEtiqueta.errors && formulario.codigoEtiqueta.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="descripcion">Descripcion</label>
+            <input type="text" placeholder="Ingrese la descripcion" autocomplete="off" formControlName="descripcion"
+                class="form-control" id="descripcion" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.descripcion.dirty && formulario.descripcion.errors && formulario.descripcion.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="observaciones">Observaciones</label>
+            <input type="text" placeholder="Ingrese las observaciones" autocomplete="off" formControlName="observaciones"
+                class="form-control" id="observaciones" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.observaciones.dirty && formulario.observaciones.errors && formulario.observaciones.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="guidCategoria">Categoria</label>
+            <input type="text" placeholder="Categoria" autocomplete="off" formControlName="guidCategoria"
+                class="form-control" id="guidCategoria" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.guidCategoria.dirty && formulario.guidCategoria.errors && formulario.guidCategoria.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="guidCampana">Campana</label>
+            <input type="text" placeholder="Campana" autocomplete="off" formControlName="guidCampana"
+                class="form-control" id="guidCampana" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.guidCampana.dirty && formulario.guidCampana.errors && formulario.guidCampana.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="guidMarca">Marca</label>
+            <input type="text" placeholder="Marca" autocomplete="off" formControlName="guidMarca"
+                class="form-control" id="guidMarca" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.guidMarca.dirty && formulario.guidMarca.errors && formulario.guidMarca.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="serialFabrica">Serial Fabrica</label>
+            <input type="text" placeholder="Serial Fabrica" autocomplete="off" formControlName="serialFabrica"
+                class="form-control" id="serialFabrica" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.serialFabrica.dirty && formulario.serialFabrica.errors && formulario.serialFabrica.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label for="habilitar">Habilitar</label>
+            <input type="text" placeholder="Habilitar" autocomplete="off" formControlName="habilitar"
+                class="form-control" id="habilitar" />
+        </div>
+        <span class="text-danger"
+            *ngIf="formulario.habilitar.dirty && formulario.habilitar.errors && formulario.habilitar.errors.required">
+            Campo nombre es requerido
+        </span>
+
+        <div class="item-formulario">
+            <label class="label-personalizado" for="habilitar">Habilitar</label>
+            <mat-slide-toggle formControlName="habilitar" color="primary" id="habilitar">
+
+            </mat-slide-toggle>
+        </div>
+
+        <div class="contenedor-botones">
+            <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="registrarEquipo(formulario)" [disabled]="!formularioActual.valid">
+                Agregar
+            </button>
+
+            <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary"
+                (click)="modificarEquipo(formulario)" [disabled]="!formularioActual.valid">
+                Modificar
+            </button>
+        </div>
+    </form>
+
+
+</div>

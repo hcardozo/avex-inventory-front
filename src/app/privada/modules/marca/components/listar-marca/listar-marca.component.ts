@@ -55,7 +55,7 @@ export class ListarMarcaComponent implements OnInit {
           }
         }, (error: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', 'Se presentan problemas al listar los registros de campañas, por favor intente nuevamente.');
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Marcas', 'Se presentan problemas al listar los registros de marcas, por favor intente nuevamente.');
           throw (error);
         })
       }
@@ -124,7 +124,7 @@ export class ListarMarcaComponent implements OnInit {
     }
     this.marcaService.cambiarEstadoMarca({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Marca', 'Se presentan problemas al realizar actualizacion de estado de marca, por favor intente nuevamente.');
       throw (error);
     })
   }
