@@ -24,6 +24,13 @@
             *ngIf="formulario.nombre.dirty && formulario.nombre.errors && formulario.nombre.errors.required">
             Campo nombre es requerido
         </span>
+        <div class="item-formulario">
+            <label for="funciones">Funciones</label>
+            <p-multiSelect [options]="cities" [(ngModel)]="selectedCities2" defaultLabel="Select a City" optionLabel="name" display="chip">
+                
+            </p-multiSelect>
+        </div>
+        
 
         <div class="item-formulario">
             <label class="label-personalizado" for="habilitar">Habilitar</label>

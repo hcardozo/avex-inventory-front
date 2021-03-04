@@ -29,7 +29,7 @@ export class ListarPerfilComponent implements OnInit {
   public vistaPreviaModulos: any;
 
   constructor(private perfilService: PerfilService,
-    private moduloService: ModuloService,
+    private modulosService : ModuloService,
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -42,6 +42,10 @@ export class ListarPerfilComponent implements OnInit {
   ngOnInit(): void {
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
     this.refrescarTabla();
+  }
+
+  public listarModulos():void{
+
   }
 
   public refrescarTabla(): void {
