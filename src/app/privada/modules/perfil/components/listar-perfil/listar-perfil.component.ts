@@ -136,7 +136,6 @@ export class ListarPerfilComponent implements OnInit {
   }
 
   public showDialog(modulos: any): void {
-    debugger
     this.display = true;
     this.vistaPreviaModulos = modulos;
   }

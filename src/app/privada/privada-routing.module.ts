@@ -37,7 +37,7 @@ const routes: Routes = [
         loadChildren: () => import('./modules/perfil/perfil.module').then(m => m.PerfilGuiModule)
       },
       {
-        path: 'equipoes',
+        path: 'equipos',
         loadChildren: () => import('./modules/equipo/equipo.module').then(m => m.EquipoGuiModule)
       },
       {
