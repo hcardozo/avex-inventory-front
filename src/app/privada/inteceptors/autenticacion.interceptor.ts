@@ -23,6 +23,8 @@ export class AutenticacionInterceptor implements HttpInterceptor {
         }
       });
       console.log('Agrega autorizacion como header')
+    } else {
+      request = req.clone();
     }
     return next.handle(request);
   }
