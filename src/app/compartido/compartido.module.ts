@@ -13,6 +13,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PaginatorModule } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -46,7 +47,8 @@ import { PaginatorModule } from 'primeng/paginator';
     InputSwitchModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    PaginatorModule
+    PaginatorModule,
+    DialogModule
   ]
 })
 export class CompartidoModule { }

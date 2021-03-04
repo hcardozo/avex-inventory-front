@@ -1,1 +1,83 @@
-<p>listar-perfil works!</p>
+<p-table #dt [value]="listaPerfiles" [globalFilterFields]="['nombre','estado']" [rowHover]="true" dataKey="id"
+    styleClass="p-datatable-responsive-demo">
+    <ng-template pTemplate="caption">
+        <div class="cabecera-tabla">
+            <h5 class="titulo">perfils</h5>
+
+            <select [(ngModel)]="registros" (change)="cambioCantidadRegistros()">
+                <option [value]="item" *ngFor="let item of registrosHabilitados">{{item}}</option>
+            </select>
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="nombre">
+                Perfil
+                <p-sortIcon field="nombre"></p-sortIcon>
+                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="nombre">
+                Descripción
+                <p-sortIcon field="nombre"></p-sortIcon>
+                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="nombre">
+                Modulos
+                <p-sortIcon field="nombre"></p-sortIcon>
+                <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="estado">
+                Estado
+                <p-sortIcon field="estado"></p-sortIcon>
+                <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
+            </th>
+            <th>Acciones </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-perfil>
+        <tr>
+            <td>
+                <span class="p-column-title">Perfil</span>{{perfil.nombre}}
+            </td>
+            <td>
+                <span class="p-column-title">Descripción</span>{{perfil.descripcion}}
+            </td>
+            <td>
+                <div class="content-perfiles-list">
+                    <span class="p-column-title">Modulos</span><i class="fa fa-eye"
+                        (click)="showDialog(perfil.modulos)"></i>
+                </div>
+            <td>
+                <div class="content-perfiles-list">
+                    <span class="p-column-title">Estado</span>
+                    <p-inputSwitch (onChange)="cambiarEstado(perfil)" [(ngModel)]="perfil.estado">
+                    </p-inputSwitch>
+                </div>
+            </td>
+            <td class="acciones">
+                <div class="content-acciones">
+                    <span class="p-column-title">Acciones</span>
+                    <button class="btn btn-warning" (click)="modificarPerfil(perfil)"><i
+                            class="fa fa-edit"></i></button>
+                    <button class="btn btn-danger" (click)="eliminarPerfil(perfil)"><i class="fa fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-paginator #paginador [rows]="registros" [totalRecords]="totalRegistros" [pageLinkSize]="3"
+    (onPageChange)="cambiarPagina($event)" [first]="0"></p-paginator>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="0"></p-confirmDialog>
+<p-dialog header="Modulos" [(visible)]="display">
+    <div class="vista-previa-modulos">
+        <ul>
+            <li *ngFor="let modulo of vistaPreviaModulos">{{modulo.nombreModulo}}</li>
+        </ul>
+    </div>
+</p-dialog>

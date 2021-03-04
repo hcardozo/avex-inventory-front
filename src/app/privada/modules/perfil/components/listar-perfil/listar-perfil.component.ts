@@ -17,7 +17,7 @@ export class ListarPerfilComponent implements OnInit {
 
   @ViewChild('paginador') paginador: any;
 
-  public listaPerfils: any[] = [];
+  public listaPerfiles: any[] = [];
   public segundoNivel: any;
   public datosSesion: any;
   public pagina: number = 1;
@@ -25,6 +25,8 @@ export class ListarPerfilComponent implements OnInit {
   public registrosHabilitados: number[] = [5, 10, 20, 50]
   public totalPaginas: number;
   public totalRegistros: number;
+  public display: boolean = false;
+  public vistaPreviaModulos: any;
 
   constructor(private perfilService: PerfilService,
     private moduloService: ModuloService,
@@ -49,14 +51,13 @@ export class ListarPerfilComponent implements OnInit {
         this.totalPaginas = response.resultado.totalPaginas;
         this.totalRegistros = response.resultado.totalRegistros;
         this.perfilService.listarPerfil({ parametro: { pagina: this.pagina, registros: this.registros } }).subscribe((resultado: any) => {
-          debugger;
           this.spinner.hide();
           if (resultado?.resultadoList) {
-            this.listaPerfils = resultado.resultadoList;
+            this.listaPerfiles = resultado.resultadoList;
           }
         }, (error: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', 'Se presentan problemas al listar los registros de campañas, por favor intente nuevamente.');
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Perfiles', 'Se presentan problemas al listar los perfiles, por favor intente nuevamente.');
           throw (error);
         })
       }
@@ -95,7 +96,7 @@ export class ListarPerfilComponent implements OnInit {
         let body: IBodyServicio<IEliminarRegistro> = {
           parametro: {
             usuarioModificacion: this.datosSesion.usuarioAvexInfo.nombre,
-            guid: perfil.guidPerfil
+            guid: perfil.guid_perfil
 
           }
         }
@@ -107,7 +108,7 @@ export class ListarPerfilComponent implements OnInit {
 
         }, (error: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Perfil', 'Se presentan problemas al realizar eliminacion de la Perfil, por favor intente nuevamente.');
+          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Perfil', 'Se presentan problemas al realizar eliminación de la Perfil, por favor intente nuevamente.');
           throw (error);
         });
       },
@@ -117,16 +118,22 @@ export class ListarPerfilComponent implements OnInit {
     });
   }
 
-  public cambiarEstado(usuario: any) {
+  public cambiarEstado(perfil: any) {
     this.spinner.show();
     let body: ICambiarEstado = {
-      guid: usuario.guidPerfil,
+      guid: perfil.guid_perfil,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
-    this.perfilService.cambiarEstadoPerfil({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+    this.perfilService.cambiarEstadoPerfil({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (error: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
+      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Perfil', 'Se presentan problemas al realizar actualizacion de estado de perfil, por favor intente nuevamente.');
       throw (error);
     })
+  }
+
+  public showDialog(modulos: any): void {
+    debugger
+    this.display = true;
+    this.vistaPreviaModulos = modulos;
   }
 }

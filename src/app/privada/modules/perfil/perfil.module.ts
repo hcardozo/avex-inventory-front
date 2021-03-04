@@ -6,6 +6,7 @@ import { ListarPerfilComponent } from './components/listar-perfil/listar-perfil.
 import { RegistrarPerfilComponent } from './components/registrar-perfil/registrar-perfil.component';
 import { ModuloModule, PerfilModule } from 'avex-api';
 import { CompartidoModule } from 'src/app/compartido/compartido.module';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
