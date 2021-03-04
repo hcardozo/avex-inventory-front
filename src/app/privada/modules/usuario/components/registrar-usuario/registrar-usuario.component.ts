@@ -106,16 +106,21 @@ export class RegistrarUsuarioComponent implements OnInit {
     };
     this.spinner.show();
     this.usuarioService.registrarUsuario({ parametro: datos }).subscribe((response: any) => {
+      debugger
       this.spinner.hide();
       if (response?.resultado?.resultado === true) {
         this.formularioActual.reset();
         this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Usuario', 'Usuario registrado exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
-      throw (error);
+      if(e.error){
+        this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Error al registrar Usuario', e.error);
+      }else{
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+      throw (e);
+      }      
     })
   }
 
@@ -150,10 +155,15 @@ export class RegistrarUsuarioComponent implements OnInit {
       if (response?.resultado?.resultado === true) {
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Usuario', 'Usuario modificado exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Usuario', 'Se presentan problemas al realizar la modificacion de usuario, por favor intente nuevamente.');
-      throw (error);
+      if(e.error){
+        this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', e.error);
+      }else{
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Usuario', 'Se presentan problemas al realizar la modificacion de usuario, por favor intente nuevamente.');
+      throw (e);
+      }
+      
     })
   }
 }

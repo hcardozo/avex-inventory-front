@@ -49,10 +49,14 @@ export class InicioSesionComponent implements OnInit {
         this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', value.mensaje);
 
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al iniciar sesion', 'Se presentan problemas al realizar el inicio de sesion, por favor intente nuevamente.');
-      throw (error);
+      if(e.error){
+        this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', e.error);
+      }else{
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al iniciar sesion', 'Se presentan problemas al realizar el inicio de sesion, por favor intente nuevamente.');
+        throw (e);
+      }
     })
 
   }
