@@ -14,6 +14,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 
@@ -29,7 +30,9 @@ import { DialogModule } from 'primeng/dialog';
     InputSwitchModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    PaginatorModule
+    PaginatorModule,
+    DialogModule,
+    MultiSelectModule
   ],
   providers: [
     MetodosComunesService,
@@ -48,7 +51,8 @@ import { DialogModule } from 'primeng/dialog';
     MatButtonToggleModule,
     MatSlideToggleModule,
     PaginatorModule,
-    DialogModule
+    DialogModule,
+    MultiSelectModule
   ]
 })
 export class CompartidoModule { }
