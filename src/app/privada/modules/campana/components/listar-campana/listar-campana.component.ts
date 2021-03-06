@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { CampanaService, ICambiarEstado, IEliminarRegistro} from 'avex-api';
+import { CampanaService, ICambiarEstado, IEliminarRegistro } from 'avex-api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService } from 'primeng/api';
 import { ETipoAlerta } from 'src/app/compartido/enums/tipo-alerta.enum';
@@ -15,26 +15,26 @@ import { USER_SESION_KEY } from 'src/environments/constantes';
 })
 export class ListarCampanaComponent implements OnInit {
 
-  @ViewChild('paginador') paginador:any; 
+  @ViewChild('paginador') paginador: any;
 
   public listarCampanas: any[] = [];
-  public segundoNivel: any ;
+  public segundoNivel: any;
   public datosSesion: any;
   public pagina: number = 1;
   public registros: number = 5;
   public registrosHabilitados: number[] = [5, 10, 20, 50]
   public totalPaginas: number;
   public totalRegistros: number;
-  
+
   constructor(private campanaService: CampanaService,
     private metodosComunes: MetodosComunesService,
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private confirmationService: ConfirmationService) { 
+    private confirmationService: ConfirmationService) {
     this.segundoNivel = this.router.getCurrentNavigation()?.extras?.state?.datos;
-    }
+  }
 
   ngOnInit(): void {
     this.datosSesion = JSON.parse(localStorage.getItem(USER_SESION_KEY));
@@ -52,10 +52,15 @@ export class ListarCampanaComponent implements OnInit {
           if (resultado?.resultadoList) {
             this.listarCampanas = resultado.resultadoList;
           }
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', 'Se presentan problemas al listar los registros de campañas, por favor intente nuevamente.');
-          throw (error);
+          if(e.error){
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', e.error);
+
+          }else{
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', 'Se presentan problemas al listar los registros de campañas, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       }
     })
@@ -73,13 +78,19 @@ export class ListarCampanaComponent implements OnInit {
   }
 
   public cambiarEstado(event: any, campana: any) {
+    this.spinner.show();
     let body: ICambiarEstado = {
       guid: campana.guidCampana,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
-    this.campanaService.cambiarEstadoCampana({ parametro: body }).subscribe(() => { }, (error: any) => {
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
-      throw (error);
+    this.campanaService.cambiarEstadoCampana({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
+      this.spinner.hide();
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar la Campaña', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar la Campaña', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 
@@ -113,16 +124,20 @@ export class ListarCampanaComponent implements OnInit {
             this.spinner.hide();
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Campaña Eliminada', 'Campaña eliminada de manera correcta.');
           }
-    
-        }, (error: any) => {
+
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar la Campaña', 'Se presentan problemas al realizar eliminacion de la campaña, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar la Campaña', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar la Campaña', 'Se presentan problemas al realizar eliminacion de la campaña, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       },
       reject: () => {
-          
+
       }
-  });
+    });
   }
 }

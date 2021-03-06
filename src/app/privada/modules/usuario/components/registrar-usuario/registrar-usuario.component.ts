@@ -116,7 +116,7 @@ export class RegistrarUsuarioComponent implements OnInit {
     }, (e: any) => {
       this.spinner.hide();
       if(e.error){
-        this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Error al registrar Usuario', e.error);
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', e.error);
       }else{
         this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
       throw (e);
@@ -158,12 +158,11 @@ export class RegistrarUsuarioComponent implements OnInit {
     }, (e: any) => {
       this.spinner.hide();
       if(e.error){
-        this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', e.error);
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Usuario', e.error);
       }else{
         this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Usuario', 'Se presentan problemas al realizar la modificacion de usuario, por favor intente nuevamente.');
       throw (e);
       }
-      
     })
   }
 }

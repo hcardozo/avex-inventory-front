@@ -55,15 +55,19 @@ export class ListarCategoriaComponent implements OnInit {
           if (resultado?.resultadoList) {
             this.listaCategorias = resultado.resultadoList;
           }
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Campañas', 'Se presentan problemas al listar los registros de campañas, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Categorías', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Categorías', 'Se presentan problemas al listar los registros de categorías, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       }
     })
   }
-  
+
   public modificarCategoria(datosCategoria: any): void {
     let navigationExtas: NavigationExtras = {
       state: {
@@ -106,10 +110,14 @@ export class ListarCategoriaComponent implements OnInit {
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Categoria Eliminada', 'Categoria eliminada de manera correcta.');
           }
 
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Categoria', 'Se presentan problemas al realizar eliminacion de la categoria, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Categorias', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Categorias', 'Se presentan problemas al listar los registros de categorias, por favor intente nuevamente.');
+            throw (e);
+          }
         });
       },
       reject: () => {
@@ -124,10 +132,14 @@ export class ListarCategoriaComponent implements OnInit {
       guid: usuario.guidCategoria,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
-    this.categoriaService.cambiarEstadoCategoria({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+    this.categoriaService.cambiarEstadoCategoria({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Categorías', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Categoría', 'Se presentan problemas al realizar actualizacion de estado de la categoría, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 }

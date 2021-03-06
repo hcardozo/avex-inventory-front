@@ -77,10 +77,14 @@ export class RegistrarCategoriaComponent implements OnInit {
         this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Categoria', 'Categoria registrada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Categoria', 'Se presentan problemas al realizar el registro de la categoria, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Categoria', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Categoria', 'Se presentan problemas al realizar el registro de la categoria, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
   public modificarCategoria(controles: any): void {
@@ -98,10 +102,14 @@ export class RegistrarCategoriaComponent implements OnInit {
       if (response?.resultado?.resultado === true) {
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Categoria', 'Categoria modificada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Categoria', 'Se presentan problemas al realizar la modificacion de la categoria, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Categoria', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Categoria', 'Se presentan problemas al realizar la modificacion de la categoria, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 }

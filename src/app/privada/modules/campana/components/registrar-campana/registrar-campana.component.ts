@@ -114,10 +114,14 @@ export class RegistrarCampanaComponent implements OnInit {
         this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Campaña', 'Campaña registrada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Campaña', 'Se presentan problemas al realizar el registro de campaña, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Campaña', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Campaña', 'Se presentan problemas al realizar el registro de campaña, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 
@@ -139,10 +143,14 @@ export class RegistrarCampanaComponent implements OnInit {
       if (response?.resultado?.resultado === true) {
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Camaña', 'Campaña modificada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Campaña', 'Se presentan problemas al realizar la modificacion de la campaña, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar la Campaña', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Campaña', 'Se presentan problemas al realizar la modificacion de la campaña, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 

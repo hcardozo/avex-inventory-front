@@ -52,11 +52,15 @@ export class ListarUsuarioComponent implements OnInit {
       guid: usuario.guid,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
     }
-    this.usuarioService.cambiarEstadoUsuario({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+    this.usuarioService.cambiarEstadoUsuario({ parametro: body }).subscribe(() => { this.spinner.hide();}, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
-      throw (error);
-    })
+      if(e.error){
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Usuario', e.error);
+      }else{
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Usuario', 'Se presentan problemas al realizar actualizacion de estado de usuario, por favor intente nuevamente.');
+      throw (e);
+      }
+    });
   }
 
   public modificarUsuario(usuario: any): void {
@@ -89,10 +93,14 @@ export class ListarUsuarioComponent implements OnInit {
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Usuario Eliminado', 'Usuario eliminado de manera correcta.');
           }
     
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
-          throw (error);
+          if(e.error){
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', e.error);
+          }else{
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Usuario', 'Se presentan problemas al realizar eliminacion de usuario, por favor intente nuevamente.');
+          throw (e);
+          }
         })
       },
       reject: () => {
@@ -118,10 +126,15 @@ export class ListarUsuarioComponent implements OnInit {
           if (resultado?.resultadoList) {
             this.listaUsuarios = resultado.resultadoList;
           }
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Usuario', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
-          throw (error);
+          if(e.error){
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Usuarios', e.error);
+
+          }else{
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Usuarios', 'Se presentan problemas al realizar el registro de usuario, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       }
     })
