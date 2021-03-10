@@ -59,7 +59,7 @@ export class RegistrarMarcaComponent implements OnInit {
     this.formularioActual.updateValueAndValidity();
   }
 
-  
+
   public registrarMarca(controles: any): void {
     let body: IRegistrarMarca = {
       usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.usuario,
@@ -74,10 +74,14 @@ export class RegistrarMarcaComponent implements OnInit {
         this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Marca', 'Marca registrada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Marca', 'Se presentan problemas al realizar el registro de la marca, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Marca', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Marca', 'Se presentan problemas al realizar el registro de la marca, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
   public modificarMarca(controles: any): void {
@@ -94,11 +98,15 @@ export class RegistrarMarcaComponent implements OnInit {
       if (response?.resultado?.resultado === true) {
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Marca', 'Marca modificada exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Marca', 'Se presentan problemas al realizar la modificacion de la Marca, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Marca', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Marca', 'Se presentan problemas al realizar la modificacion de la Marca, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
-  
+
 }

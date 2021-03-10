@@ -29,7 +29,7 @@ export class ListarPerfilComponent implements OnInit {
   public vistaPreviaModulos: any;
 
   constructor(private perfilService: PerfilService,
-    private modulosService : ModuloService,
+    private modulosService: ModuloService,
     private alertService: AlertaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -55,10 +55,14 @@ export class ListarPerfilComponent implements OnInit {
           if (resultado?.resultadoList) {
             this.listaPerfiles = resultado.resultadoList;
           }
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Perfiles', 'Se presentan problemas al listar los perfiles, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Perfiles', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Perfiles', 'Se presentan problemas al listar los perfiles, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       }
     })
@@ -106,10 +110,14 @@ export class ListarPerfilComponent implements OnInit {
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Perfil Eliminado', 'Perfil eliminado de manera correcta.');
           }
 
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Perfil', 'Se presentan problemas al realizar eliminación de la Perfil, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Perfil', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Perfil', 'Se presentan problemas al realizar eliminación de la Perfil, por favor intente nuevamente.');
+            throw (e);
+          }
         });
       },
       reject: () => {
@@ -124,10 +132,14 @@ export class ListarPerfilComponent implements OnInit {
       guid: perfil.guid_perfil,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
-    this.perfilService.cambiarEstadoPerfil({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (error: any) => {
+    this.perfilService.cambiarEstadoPerfil({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Perfil', 'Se presentan problemas al realizar actualizacion de estado de perfil, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Perfil', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Perfil', 'Se presentan problemas al realizar actualizacion de estado de perfil, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 

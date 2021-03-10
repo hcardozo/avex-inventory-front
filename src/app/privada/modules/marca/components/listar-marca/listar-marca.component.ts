@@ -15,7 +15,7 @@ import { USER_SESION_KEY } from 'src/environments/constantes';
 })
 export class ListarMarcaComponent implements OnInit {
 
-  
+
   @ViewChild('paginador') paginador: any;
 
   public listaMarcas: any[] = [];
@@ -53,15 +53,19 @@ export class ListarMarcaComponent implements OnInit {
           if (resultado?.resultadoList) {
             this.listaMarcas = resultado.resultadoList;
           }
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Marcas', 'Se presentan problemas al listar los registros de marcas, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Marcas', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al listar Marcas', 'Se presentan problemas al listar los registros de marcas, por favor intente nuevamente.');
+            throw (e);
+          }
         })
       }
     })
   }
-  
+
   public modificarMarca(datosMarca: any): void {
     let navigationExtas: NavigationExtras = {
       state: {
@@ -104,10 +108,14 @@ export class ListarMarcaComponent implements OnInit {
             this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Marca Eliminada', 'Marca eliminada de manera correcta.');
           }
 
-        }, (error: any) => {
+        }, (e: any) => {
           this.spinner.hide();
-          this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Marca', 'Se presentan problemas al realizar eliminacion de la marca, por favor intente nuevamente.');
-          throw (error);
+          if (e.error) {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Marca', e.error);
+          } else {
+            this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al eliminar Marca', 'Se presentan problemas al realizar eliminación de la marca, por favor intente nuevamente.');
+            throw (e);
+          }
         });
       },
       reject: () => {
@@ -122,10 +130,14 @@ export class ListarMarcaComponent implements OnInit {
       guid: usuario.guidMarca,
       usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
-    this.marcaService.cambiarEstadoMarca({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
+    this.marcaService.cambiarEstadoMarca({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Marca', 'Se presentan problemas al realizar actualizacion de estado de marca, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Marca', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al actualizar Marca', 'Se presentan problemas al realizar actualizacion de estado de marca, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 }

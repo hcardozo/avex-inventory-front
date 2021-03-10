@@ -111,10 +111,14 @@ export class RegistrarPerfilComponent implements OnInit {
         this.formulario.habilitar.setValue(true);
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Registro de Perfil', 'Perfil registrado exitosamente.')
       }
-    }, (error: any) => {
+    }, (e: any) => {
       this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Perfil', 'Se presentan problemas al realizar el registro de perfil, por favor intente nuevamente.');
-      throw (error);
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Perfil', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al registrar Perfil', 'Se presentan problemas al realizar el registro de perfil, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 
@@ -133,10 +137,13 @@ export class RegistrarPerfilComponent implements OnInit {
       if (response?.resultado?.resultado === true) {
         this.alertService.mostrarNotificacion(ETipoAlerta.EXITOSA, 'Modificacion de Perfil', 'Perfil modificado exitosamente.')
       }
-    }, (error: any) => {
-      this.spinner.hide();
-      this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Perfil', 'Se presentan problemas al realizar la modificacion del perfil, por favor intente nuevamente.');
-      throw (error);
+    }, (e: any) => {
+      if (e.error) {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Perfil', e.error);
+      } else {
+        this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al modificar Perfil', 'Se presentan problemas al realizar la modificacion del perfil, por favor intente nuevamente.');
+        throw (e);
+      }
     })
   }
 }
