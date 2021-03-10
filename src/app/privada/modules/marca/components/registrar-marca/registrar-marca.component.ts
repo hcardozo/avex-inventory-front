@@ -62,7 +62,7 @@ export class RegistrarMarcaComponent implements OnInit {
   
   public registrarMarca(controles: any): void {
     let body: IRegistrarMarca = {
-      usuarioCreacion: this.datosSesion.usuarioAvexInfo.usuario,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       nombre: controles.nombre.value,
       estado: controles.habilitar.value
     }
@@ -82,7 +82,7 @@ export class RegistrarMarcaComponent implements OnInit {
   }
   public modificarMarca(controles: any): void {
     let body: IModificarMarca = {
-      usuarioModificacion: this.datosSesion.usuarioAvexInfo.usuario,
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       guidMarca: controles.guidMarca.value,
       nombre: controles.nombre.value,
       estado: controles.habilitar.value

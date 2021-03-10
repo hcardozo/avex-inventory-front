@@ -101,12 +101,11 @@ export class RegistrarUsuarioComponent implements OnInit {
       email: controles.correoCorporativo.value,
       telefono: controles.telefono.value,
       guidPerfil: controles.perfil.value,
-      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       estado:controles.habilitar.value  
     };
     this.spinner.show();
     this.usuarioService.registrarUsuario({ parametro: datos }).subscribe((response: any) => {
-      debugger
       this.spinner.hide();
       if (response?.resultado?.resultado === true) {
         this.formularioActual.reset();
@@ -147,7 +146,7 @@ export class RegistrarUsuarioComponent implements OnInit {
       telefono: controles.telefono.value,
       guidPerfil: controles.perfil.value,
       estado: controles.habilitar.value,
-      usuarioModificacion: this.datosSesion.usuarioAvexInfo.usuario
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.spinner.show();
     this.usuarioService.modificarUsuario({ parametro: body }).subscribe((response: any) => {

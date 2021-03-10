@@ -33,7 +33,7 @@
         <div class="item-formulario">
             <label for="nombre">Nombre</label>
             <input type="text" placeholder="Nombre de la Campaña" autocomplete="off" formControlName="nombre"
-                class="form-control" id="nombre" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+                class="form-control" id="nombre" />
         </div>
         <span class="text-danger"
             *ngIf="formulario.nombre.dirty && formulario.nombre.errors && formulario.nombre.errors.required">
@@ -43,7 +43,7 @@
         <div class="item-formulario">
             <label for="direccion">Dirección</label>
             <input type="text" placeholder="Dirección" autocomplete="off" formControlName="direccion"
-                class="form-control" id="direccion" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+                class="form-control" id="direccion" />
         </div>
         <span class="text-danger"
             *ngIf="formulario.direccion.dirty && formulario.direccion.errors && formulario.direccion.errors.required">
@@ -53,7 +53,7 @@
         <div class="item-formulario">
             <label for="detalleDireccion">Detalle Dirección</label>
             <input type="text" placeholder="Dirección" autocomplete="off" formControlName="detalleDireccion"
-                class="form-control" id="detalleDireccion" [readonly]="!this.parametrosRuta?.modificacion ? false : true" />
+                class="form-control" id="detalleDireccion" />
         </div>
         <span class="text-danger"
             *ngIf="formulario.detalleDireccion.dirty && formulario.detalleDireccion.errors && formulario.detalleDireccion.errors.required">
@@ -83,12 +83,12 @@
 
         <div class="contenedor-botones">
             <button *ngIf="!this.parametrosRuta?.modificacion" class="btn btn-primary"
-                (click)="agregarUsuario(formulario)" [disabled]="!formularioActual.valid">
+                (click)="agregarCampana(formulario)" [disabled]="!formularioActual.valid">
                 Agregar
             </button>
 
             <button *ngIf="this.parametrosRuta?.modificacion" class="btn btn-primary"
-                (click)="modificarUsuario(formulario)" [disabled]="!formularioActual.valid">
+                (click)="modificarCampana(formulario)" [disabled]="!formularioActual.valid">
                 Modificar
             </button>
         </div>

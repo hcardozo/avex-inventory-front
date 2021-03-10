@@ -50,7 +50,7 @@ export class ListarUsuarioComponent implements OnInit {
     this.spinner.show();
     let body: ICambiarEstado = {
       guid: usuario.guid,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.usuarioService.cambiarEstadoUsuario({ parametro: body }).subscribe(() => { this.spinner.hide();}, (e: any) => {
       this.spinner.hide();
@@ -83,7 +83,7 @@ export class ListarUsuarioComponent implements OnInit {
         this.spinner.show();
         let body: IEliminarRegistro = {
           guid: usuario.guid,
-          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
         }
         let indexUsuario: number = this.listaUsuarios.findIndex(item => item.guid == usuario.guid);
         this.listaUsuarios.splice(indexUsuario, 1);

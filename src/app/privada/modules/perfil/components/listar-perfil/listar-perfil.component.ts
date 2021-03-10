@@ -95,7 +95,7 @@ export class ListarPerfilComponent implements OnInit {
         this.spinner.show();
         let body: IBodyServicio<IEliminarRegistro> = {
           parametro: {
-            usuarioModificacion: this.datosSesion.usuarioAvexInfo.nombre,
+            usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario,
             guid: perfil.guid_perfil
 
           }
@@ -122,7 +122,7 @@ export class ListarPerfilComponent implements OnInit {
     this.spinner.show();
     let body: ICambiarEstado = {
       guid: perfil.guid_perfil,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.perfilService.cambiarEstadoPerfil({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (error: any) => {
       this.spinner.hide();

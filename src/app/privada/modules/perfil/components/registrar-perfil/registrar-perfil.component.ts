@@ -100,7 +100,7 @@ export class RegistrarPerfilComponent implements OnInit {
       nombrePerfil: controles.nombre.value,
       descripcionPerfil: controles.descripcion.value,
       modulos: controles.modulos.value,
-      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       estado: controles.habilitar.value
     };
     this.spinner.show();
@@ -124,7 +124,7 @@ export class RegistrarPerfilComponent implements OnInit {
       nombrePerfil: controles.nombre.value,
       descripcionPerfil: controles.descripcion.value,
       modulos: controles.modulos.value,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       estado: controles.habilitar.value
     }
     this.spinner.show();

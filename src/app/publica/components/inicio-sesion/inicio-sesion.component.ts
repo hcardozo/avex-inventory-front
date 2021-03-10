@@ -51,7 +51,7 @@ export class InicioSesionComponent implements OnInit {
       }
     }, (e: any) => {
       this.spinner.hide();
-      if(e.error){
+      if(e.error && e.status != 0){
         this.alertService.mostrarNotificacion(ETipoAlerta.ALERTA, 'Acceso Denegado', e.error);
       }else{
         this.alertService.mostrarNotificacion(ETipoAlerta.ERROR, 'Error al iniciar sesion', 'Se presentan problemas al realizar el inicio de sesion, por favor intente nuevamente.');

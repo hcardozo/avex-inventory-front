@@ -99,7 +99,7 @@ export class ListarCategoriaComponent implements OnInit {
         this.spinner.show();
         let body: IBodyServicio<IEliminarRegistro> = {
           parametro: {
-            usuarioModificacion: this.datosSesion.usuarioAvexInfo.nombre,
+            usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario,
             guid: categoria.guidCategoria
 
           }
@@ -130,7 +130,7 @@ export class ListarCategoriaComponent implements OnInit {
     this.spinner.show();
     let body: ICambiarEstado = {
       guid: usuario.guidCategoria,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.categoriaService.cambiarEstadoCategoria({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
       this.spinner.hide();

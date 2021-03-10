@@ -7,8 +7,8 @@ export const environment = {
   configuracionUrl: {
     dominio: '26.11.114.212',
     prefijo: 'api',
-    protocolo: 'https',
-    puerto: '5001'
+    protocolo: 'http',
+    puerto: '5051'
   }
 };
 
