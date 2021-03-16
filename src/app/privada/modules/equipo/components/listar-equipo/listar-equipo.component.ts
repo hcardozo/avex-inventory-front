@@ -121,7 +121,7 @@ export class ListarEquipoComponent implements OnInit {
     this.spinner.show();
     let body: ICambiarEstado = {
       guid: usuario.guidEquipo,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.equipoService.cambiarEstadoEquipo({ parametro: body }).subscribe(() => { this.spinner.hide();}, (error: any) => {
       this.spinner.hide();

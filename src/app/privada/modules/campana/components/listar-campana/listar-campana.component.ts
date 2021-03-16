@@ -81,7 +81,7 @@ export class ListarCampanaComponent implements OnInit {
     this.spinner.show();
     let body: ICambiarEstado = {
       guid: campana.guidCampana,
-      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+      usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
     }
     this.campanaService.cambiarEstadoCampana({ parametro: body }).subscribe(() => { this.spinner.hide(); }, (e: any) => {
       this.spinner.hide();
@@ -114,7 +114,7 @@ export class ListarCampanaComponent implements OnInit {
         this.spinner.show();
         let body: IEliminarRegistro = {
           guid: campana.guidCampana,
-          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.nombre
+          usuarioModificacion: this.datosSesion?.usuarioAvexInfo?.usuario
         }
         let indexUsuario: number = this.listarCampanas.findIndex(item => item.guidCampana == campana.guidCampana);
         this.listarCampanas.splice(indexUsuario, 1);

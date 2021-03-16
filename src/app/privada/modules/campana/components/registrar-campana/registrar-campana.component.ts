@@ -103,7 +103,7 @@ export class RegistrarCampanaComponent implements OnInit {
       direccion: controles.direccion.value,
       detalleDireccion: controles.detalleDireccion.value,
       telefono: controles.telefono.value,
-      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.nombre,
+      usuarioCreacion: this.datosSesion?.usuarioAvexInfo?.usuario,
       estado:controles.habilitar.value  
     };
     this.spinner.show();
